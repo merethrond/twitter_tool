@@ -11,8 +11,8 @@ prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
 driver = webdriver.Chrome(r'C:\Users\Ayush\Desktop\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
 
-username = '9312645200'
-password = 'india2000'
+username = '---'
+password = '---'
 
 # def super_get(url):
 #     driver.get(url)
