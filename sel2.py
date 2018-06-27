@@ -3,8 +3,8 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC   
-username = "ayushxx7@gmail.com"
-password = "india2000"
+username = "#####"
+password = "#####"
 
 getdriver = ("https://www.instagram.com/accounts/login/")
 
