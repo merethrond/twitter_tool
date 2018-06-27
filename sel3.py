@@ -2,8 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC   
-username = "ayushxx7@gmail.com"
-password = "india2000" #values present in original file
+username = "#####"
+password = "#####" #values present in original file
 
 getdriver = ("https://www.instagram.com/accounts/login/")
 
