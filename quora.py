@@ -15,7 +15,7 @@ driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe')
 driver.get('http://www.quora.com')
 
 username = "_"
-password = "_"
+password = "_" #put your google username and password here
 
 
 ### FOUND WINDOW CODE
@@ -32,9 +32,9 @@ def found_window(name):
 time.sleep(2)
 before = driver.window_handles[0]
 driver.find_element_by_class_name("google_button_text").click()
-# time.sleep(3)
+time.sleep(3)
 # print(driver.window_name
-WebDriverWait(driver, timeout=50).until(found_window("Sign in - Google Accounts - Google Chrome"))
+# WebDriverWait(driver, timeout=50).until(found_window("Sign in - Google Accounts - Google Chrome"))
 
 after = driver.window_handles[1]
 driver.switch_to_window(after)
@@ -52,7 +52,7 @@ time.sleep(2)
 # driver.find_element(By.CSS_SELECTOR, '.selector_input.text').send_keys('Amrit Singh'+Keys.RETURN)
 # driver.get('https://www.quora.com/profile/Amrit-Singh-94')
 
-driver.get('https://www.quora.com/profile/Lakshya-Aggrawal')		
+driver.get('https://www.quora.com/profile/Lakshya-Aggrawal') #upvoting this profile's answers
 
 # upvotes = driver.find_elements_by_xpath('//span[contains(text(),"Upvote")]')
 # upvotes = driver.find_elements_by_xpath('//a[@action_click="AnswerUpvote"]')
@@ -80,7 +80,7 @@ driver.get('https://www.quora.com/profile/Lakshya-Aggrawal')
 
 for i in range(0,10):
 	time.sleep(4)
-	upvotes = driver.find_elements_by_xpath('//a[@action_click="AnswerUpvote"]')
+	upvotes = driver.find_elements_by_xpath('//a[@action_click="AnswerUpvote"]') #better approach to only upvote answers that have't been upvoted
 	print(upvotes)
 	for i in range(0,len(upvotes)):
 		try:
