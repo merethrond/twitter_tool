@@ -11,8 +11,8 @@ import time
 from selenium.webdriver.common.action_chains import ActionChains
 
  
-username = "alamgirakmal@yahoo.com"
-Password = "desperateforsolace"
+username = "abc@yahoo.com"
+Password = "Password"
 
 account =('https://www.facebook.com/login.php?login_attempt=1&lwv=110')
 
