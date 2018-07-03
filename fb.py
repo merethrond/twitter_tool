@@ -7,6 +7,9 @@ from selenium.webdriver.common.keys import Keys
 
 from selenium.webdriver.common.action_chains import ActionChains
 
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 # from pynput.keyboard import Key, Controller
 
 # import keyboard
@@ -18,8 +21,9 @@ prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
 driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
 
-username = '---'
-password = '---'
+username = '__'
+password = '__'	
+# wait = WebDriverWait(driver,10)
 
 # def super_get(url):
 #     driver.get(url)
@@ -31,52 +35,133 @@ driver.get('http://www.facebook.com/login')
 
 driver.find_element_by_name('email').send_keys(username)
 driver.find_element_by_name('pass').send_keys(password)
-driver.find_element_by_name('login').click()
+driver.find_element_by_name('login').click()	
 # time.sleep(2)
 driver.maximize_window()
-#driver.find_elements_by_name('q').send_keys('Ayush Mandowara')	
-driver.find_element_by_xpath('//input[@placeholder="Search"]').send_keys('Ayush Mandowara' + Keys.RETURN)
-time.sleep(4)
-driver.find_element_by_xpath('//div[contains(text(), "Ayush Mandowara")]').click()
-time.sleep(3)
-driver.find_element_by_class_name('coverBorder').click()
-time.sleep(2)
+# time.sleep(6)
+searchbox = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.NAME, 'q')))
+searchbox.click()
+# driver.find_element_by_name('q').send_keys('Ayush Mandowara' + Keys.RETURN)	
+searchbox.send_keys('Ayush Mandowara' + Keys.RETURN)
+# searchbox.click()
+
+# time.sleep(5)
+# element = wait.until(EC.presence_of_element_located((By.xpath, '//input[@placeholder="Search"]'))
+# driver.find_element_by_xpath('//input[@placeholder="Search"]').send_keys('Ayush Mandowara' + Keys.RETURN)
+# time.sleep(4)
+
+firstresult = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//div[contains(text(), "Ayush Mandowara")]')))
+firstresult.click()
+# driver.find_element_by_xpath('//div[contains(text(), "Ayush Mandowara")]').click()
+# time.sleep(8)
+coverpic = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.coverBorder')))
+coverpic.click()
+# driver.find_element_by_class_name('coverBorder').click()
+# time.sleep(2)
+
+
+# for i in range(0,len(like)):
+# 	liked = like[x].get_attribute("data-testid")
+# 	if liked == "fb-ufi-likelink":
+# 		like[x].click()
 
 ####LIKE
+# actions = ActionChains(driver)
+
+# time.sleep(8)
+
 # for i in range(0,10):
+# 	time.sleep(2)
 # 	like = driver.find_elements(By.CSS_SELECTOR, ".UFILikeLink._4x9-._4x9_._48-k")
 # 	x = len(like)-1
 # 	print(like[x])
+# 	time.sleep(1)
 # 	liked = like[x].get_attribute("data-testid")
 # 	print(liked)
 # 	if liked == "fb-ufi-likelink":
 # 		like[x].click()
-# 	actions = ActionChains(driver)
 # 	actions.send_keys(Keys.RIGHT)
 # 	actions.perform()
-# 	time.sleep(2)
+
+	
+	# actions.send_keys(Keys.RIGHT)
+	# actions.perform()
+	# time.sleep(2)
 
 # driver.execute_script("var elems = document.getElementsByClassName('UFILikeLink _4x9- _4x9_ _48-k');for(var i= 0;i<elems.length;i++){elems[i].click();}");
-
+#element.get_attribute("attribute name")
 
 ### COMMENT
-
+# time.sleep(5)
 # comment = driver.find_elements(By.CSS_SELECTOR, ".comment_link._5yxe")
 # x = len(comment)-1
 # comment[x].click()
 # time.sleep(2)
 # actions = ActionChains(driver)
 # actions.send_keys('dummydata')
+# 
 # actions.perform()
 
 ### SHARE
 
+# time.sleep(8)
+#is_displayed():
+# share = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".share_action_link._5f9b")))
+# time.sleep(6)
+
+image = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.spotlight')))
+time.sleep(10) #bottleneck
 # share = driver.find_elements(By.CSS_SELECTOR, ".share_action_link._5f9b")
-# x = len(share)-1
-# share[x].click()
-# time.sleep(4)
-# element = driver.find_element_by_xpath("//button[contains(.,'Post')]")
-# print(element)
+
+share = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".share_action_link._5f9b")))
+x = len(share)-1	
+if(share[x].is_displayed()):
+	share[x].click()
+
+
+# x = len(share)-1	
+# if(share[x].is_displayed()):
+# 	share[x].click()
+# else:
+
+# 	share = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".share_action_link._5f9b")))
+# 	x = len(share)-1	
+# 	share[x].click()
+
+
+# time.sleep(12)
+
+# share2 = driver.find_elements(By.CSS_SELECTOR, "._1jlx")
+# share2.click()#share_on_own
+# time.sleep(10) #unable to overcome this hurdle, need to figure it out 
+#img class = spotlight
+time.sleep(9) #bottleneck
+chooser = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//span[@data-testid="share_on_own"]')))
+# chooser = driver.find_element_by_xpath('//span[@data-testid="share_on_own"]')
+# chooser[len(chooser)-1].click()
+# chooser.click()
+# time.sleep(6)
+chosen = len(chooser)-1
+# parent = chooser[chosen].find_element_by_xpath('..')
+# print(parent.get_attribute(''))
+chooser[chosen].click()
+
+shareToFriend = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//span[@data-testid="share_to_person"]')))
+# shareToFriend = driver.find_elements_by_xpath('//span[@data-testid="share_to_person"]')
+share2 = len(shareToFriend)-1
+shareToFriend[share2].click()
+element = driver.find_element_by_xpath("//button[contains(.,'Post')]")
+print(element)
+
+# friendName = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,	'//input[@placeholder="Friend\'s name"]')))
+# friendName.click()
+
+actions = ActionChains(driver)
+actions.send_keys('mihir')
+# + Keys.DOWN + Keys.RETURN)
+actions.perform()
+
+# placeholder="Friend's name"
 # element.click()
 # share_action_link _5f9b
 
@@ -112,4 +197,24 @@ FACEBOOK CLASS:
 data-offset-key="fvq43-0-0"
 '''
 
+########## Default EC LIST
 
+# title_is
+# title_contains
+# presence_of_element_located
+# visibility_of_element_located
+# visibility_of
+# presence_of_all_elements_located
+# text_to_be_present_in_element
+# text_to_be_present_in_element_value
+# frame_to_be_available_and_switch_to_it
+# invisibility_of_element_located
+# element_to_be_clickable
+# staleness_of
+# element_to_be_selected
+# element_located_to_be_selected
+# element_selection_state_to_be
+# element_located_selection_state_to_be
+# alert_is_present
+
+##########
