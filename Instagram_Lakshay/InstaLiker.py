@@ -3,8 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 #login credentials
-username = "botsbanao"
-password = "Bots@banao"
+username = "xxxxxxxxx"
+password = "xxxxxxxxx"
 
 login_page = ("https://www.instagram.com/accounts/login/")
 
