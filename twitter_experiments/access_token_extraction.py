@@ -9,9 +9,7 @@ Created on Wed Jul  4 21:59:51 2018
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import os
-username = "xxxxxxxxx"
-password = "xxxxxxxxx"
-
+from access_keys import username, password
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
 
@@ -31,4 +29,4 @@ elem.send_keys(Keys.RETURN)
 driver.get('https://apps.twitter.com/')
 elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
 elem.click()
-driver.close()
+#driver.close()
