@@ -10,6 +10,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from fblogin import username,password #shifted to seperate file
+
 # from pynput.keyboard import Key, Controller
 
 # import keyboard
@@ -21,8 +23,6 @@ prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
 driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
 
-username = '__'
-password = '__'	
 # wait = WebDriverWait(driver,10)
 
 # def super_get(url):
@@ -110,10 +110,15 @@ coverpic.click()
 # time.sleep(6)
 
 image = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.spotlight')))
-time.sleep(10) #bottleneck
+# time.sleep(10) #bottleneck
 # share = driver.find_elements(By.CSS_SELECTOR, ".share_action_link._5f9b")
 
 share = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".share_action_link._5f9b")))
+while len(share) < 4:
+	share = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".share_action_link._5f9b")))
+	print('len(share):',len(share))
+	# pass
+
 x = len(share)-1	
 if(share[x].is_displayed()):
 	share[x].click()
@@ -135,16 +140,31 @@ if(share[x].is_displayed()):
 # share2.click()#share_on_own
 # time.sleep(10) #unable to overcome this hurdle, need to figure it out 
 #img class = spotlight
-time.sleep(9) #bottleneck
+# time.sleep(9) #bottleneck
+count = 0
 chooser = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//span[@data-testid="share_on_own"]')))
+while len(chooser) < 2:
+	chooser = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//span[@data-testid="share_on_own"]')))
+	print('len(chooser):',len(chooser))
+	count += 1
+	if count > 10:
+		print('enough retries, breaking')
+		break
+
+
+x = len(chooser)-1	
+if(chooser[x].is_displayed()):
+	chooser[x].click()
 # chooser = driver.find_element_by_xpath('//span[@data-testid="share_on_own"]')
 # chooser[len(chooser)-1].click()
 # chooser.click()
 # time.sleep(6)
-chosen = len(chooser)-1
-# parent = chooser[chosen].find_element_by_xpath('..')
-# print(parent.get_attribute(''))
-chooser[chosen].click()
+# chosen = len(chooser)-1
+# # parent = chooser[chosen].find_element_by_xpath('..')
+# # print(parent.get_attribute(''))
+# chooser[chosen].click()
+
+# ####### SHARE TO FRIEND
 
 shareToFriend = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//span[@data-testid="share_to_person"]')))
 # shareToFriend = driver.find_elements_by_xpath('//span[@data-testid="share_to_person"]')
@@ -153,13 +173,52 @@ shareToFriend[share2].click()
 element = driver.find_element_by_xpath("//button[contains(.,'Post')]")
 print(element)
 
-# friendName = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,	'//input[@placeholder="Friend\'s name"]')))
-# friendName.click()
+friendName = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,	'//input[@placeholder="Friend\'s name"]')))
+print(friendName)
+friendName[0].send_keys('mihir' + Keys.DOWN + Keys.RETURN)
+element.click()
 
-actions = ActionChains(driver)
-actions.send_keys('mihir')
-# + Keys.DOWN + Keys.RETURN)
-actions.perform()
+
+
+
+#########SHARE IN GROUP
+
+# shareInGroup = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//span[@data-testid="share_to_group"]')))
+# # shareToFriend = driver.find_elements_by_xpath('//span[@data-testid="share_to_person"]')
+# share2 = len(shareInGroup)-1
+# shareInGroup[share2].click()
+# element = driver.find_element_by_xpath("//button[contains(.,'Post')]")
+# print(element)
+
+# groupName = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,	'//input[@placeholder="Group name"]')))
+# print(groupName)
+# groupName[0].send_keys('mihir' + Keys.DOWN + Keys.RETURN)
+# element.click()
+
+
+#########SHARE TO EVENT
+
+# shareInEvent = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,'//span[@data-testid="share_to_event"]')))
+# # shareToFriend = driver.find_elements_by_xpath('//span[@data-testid="share_to_person"]')
+# share2 = len(shareInEvent)-1
+# shareInEvent[share2].click()
+# element = driver.find_element_by_xpath("//button[contains(.,'Post')]")
+# print(element)
+
+# eventName = WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.XPATH,	'//input[@placeholder="Group name"]')))
+# print(eventName)
+# eventName[0].send_keys('mihir' + Keys.DOWN + Keys.RETURN)
+# element.click()
+
+
+# friendName.click()
+# actions = ActionChains(driver)
+# actions.send_keys(Keys.RETURN)
+# actions.perform()
+# element.click()
+
+# # + Keys.DOWN + Keys.RETURN)
+# actions.perform()
 
 # placeholder="Friend's name"
 # element.click()
