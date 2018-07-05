@@ -10,6 +10,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import os
 from access_keys import username, password
+import bs4 as BeautifulSoup
+
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
 
@@ -29,4 +31,8 @@ elem.send_keys(Keys.RETURN)
 driver.get('https://apps.twitter.com/')
 elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
 elem.click()
-#driver.close()
+driver.get(driver.current_url[:-4] + "keys")
+#tokenSoup = BeautifulSoup(open(driver.page_source),"html.parser")#,"lxml")
+
+print(driver.page_source)
+driver.close()
