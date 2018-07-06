@@ -17,6 +17,9 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from excelReader import credentials
+
+print(credentials)
 # PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__)
 # DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
 
