@@ -1,2 +1,5 @@
 .DS_Store
-access_token.py
+email_credentials.xlsx
+access_keys.py
+.ipynb_checkpoints/
+__pycache__/
