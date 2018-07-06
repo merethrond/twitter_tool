@@ -12,16 +12,22 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 
- 
-username = "alamgirakmal@gmail.com"
-Password = "Canada@2018"
+from access_keys import username, password 
 
 account =('https://apps.twitter.com/')
+'''
+Use this in case of windows.
+'''
+#chrome_options = webdriver.ChromeOptions()
+#prefs = {"profile.default_content_setting_values.notifications" : 2}
+#chrome_options.add_experimental_option("prefs",prefs)
+#driver = webdriver.Chrome(r'C:\Users\Admin\Desktop\chromedriver.exe', chrome_options=chrome_options)
 
-chrome_options = webdriver.ChromeOptions()
-prefs = {"profile.default_content_setting_values.notifications" : 2}
-chrome_options.add_experimental_option("prefs",prefs)
-driver = webdriver.Chrome(r'C:\Users\Admin\Desktop\chromedriver.exe', chrome_options=chrome_options)
+import os
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+
+driver = webdriver.Chrome(executable_path = DRIVER_BIN)
 
 # driver = webdriver.Chrome(r"C:\Users\Admin\Desktop\chromedriver.exe")
 driver.get(account)
@@ -34,12 +40,12 @@ email = driver.switch_to_active_element()
 # email = driver.find_element_by_class_name("swift-loading no-nav-banners")
 email.send_keys(username)
 email.send_keys(Keys.TAB)
-print("email enetered")
+print("email entered")
 
 time.sleep(3)
 email = driver.switch_to_active_element()
 # passcode = driver.find_element_by_name("session[password]")
-email.send_keys(Password)
+email.send_keys(password)
 email.send_keys(Keys.RETURN)
 print("password entered")
 
