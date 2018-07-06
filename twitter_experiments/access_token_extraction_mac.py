@@ -8,6 +8,10 @@ Created on Wed Jul  4 21:59:51 2018
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+#from selenium.webdriver.support.ui import WebDriverWait
+#from selenium.webdriver.support import expected_conditions as EC
+#from selenium.webdriver.common.by import By
+
 import os
 from access_keys import username, password
 from bs4 import BeautifulSoup
@@ -20,7 +24,11 @@ driver = webdriver.Chrome(executable_path = DRIVER_BIN)
 # twitter login process
 driver.get('https://twitter.com/login')
 print(driver.title)
+#elem = WebDriverWait(driver, 30).presence_of_element_located(By.NAME, "session")
+
 elem = driver.switch_to_active_element()
+#elem = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.NAME, 'session[username_or_email]')))
+
 elem.send_keys(username)
 elem.send_keys(Keys.TAB)
 elem = driver.switch_to_active_element()
