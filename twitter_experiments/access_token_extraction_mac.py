@@ -35,5 +35,12 @@ driver.get(driver.current_url[:-4] + "keys")
 page = (driver.page_source)
 driver.close()
 tokenSoup = BeautifulSoup(page,"html.parser")#,"lxml")
-consumer_tokens = tokenSoup.select(".app-settings")
-print(consumer_tokens)
+consumer_tokens = tokenSoup.select(".app-settings > .row > span")
+consumer_key = consumer_tokens[1].string
+consumer_secret = consumer_tokens[3].string
+print("consumer_key:", consumer_key, "consumer_secret:", consumer_secret, sep = '\n')
+
+access_tokens = tokenSoup.select(".access > .row > span")
+access_token = access_tokens[1].string
+access_token_secret = access_tokens[3].string
+print("access_token:", access_token, "access_token_secret:", access_token_secret, sep = '\n')
