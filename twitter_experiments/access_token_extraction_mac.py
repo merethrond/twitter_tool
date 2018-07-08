@@ -42,12 +42,19 @@ def get_keys_of_first_app(driver):
     elem.click()
     driver.get(driver.current_url[:-4] + "keys")
     page = (driver.page_source)
+    #comment out the line below in case you want to leave the browser open after calling this function.
     driver.close()
+    
     tokenSoup = BeautifulSoup(page,"html.parser")#,"lxml")
     consumer_tokens = tokenSoup.select(".app-settings > .row > span")
     consumer_key = consumer_tokens[1].string
     consumer_secret = consumer_tokens[3].string
     print("consumer_key:", consumer_key, "consumer_secret:", consumer_secret, sep = '\n')
+    try:
+        get_access = driver.find_element_by_name("op")
+        get_access.click()
+    except:
+        print("No access button found")
     access_tokens = tokenSoup.select(".access > .row > span")
     access_token = access_tokens[1].string
     access_token_secret = access_tokens[3].string
@@ -100,5 +107,5 @@ def create_app(driver):
     Create.send_keys(Keys.RETURN)
     
 login_to_twitter(driver)
-create_app(driver)
-#get_keys_of_first_app(driver)    
+#create_app(driver)
+get_keys_of_first_app(driver)    
