@@ -13,6 +13,7 @@ from selenium.webdriver.common.keys import Keys
 #from selenium.webdriver.common.by import By
 
 import os
+import time
 from access_keys import username, password
 from bs4 import BeautifulSoup
 
@@ -51,7 +52,53 @@ def get_keys_of_first_app(driver):
     access_token = access_tokens[1].string
     access_token_secret = access_tokens[3].string
     print("access_token:", access_token, "access_token_secret:", access_token_secret, sep = '\n')
+    
+def create_app(driver):
+    driver.get('https://apps.twitter.com/')
+  
+    New_app = driver.find_element_by_xpath("//a[@href ='/app/new']")
+    New_app.send_keys(Keys.RETURN)
+    
+    name = driver.find_element_by_name("name")
+    name.send_keys("John Abraham")
+    name.send_keys(Keys.TAB)
+    
+    description = driver.switch_to_active_element()
+    description.send_keys("Force and Rocky handsome")
+    description.send_keys(Keys.TAB)
+    
+    website = driver.switch_to_active_element()
+    website.send_keys("https://www.google.com")
+    time.sleep(1)
+    
+    website.send_keys(Keys.TAB)
+    time.sleep(1)
+    
+    Oauth = driver.switch_to_active_element()
+    Oauth.send_keys(Keys.TAB)
+    time.sleep(1)
+    
+    URL = driver.switch_to_active_element()
+    URL.send_keys(Keys.TAB)
+    time.sleep(1)
+    
+    URL_Tab = driver.switch_to_active_element()
+    URL_Tab.send_keys(Keys.TAB)
+    time.sleep(1)
+    
+    Confirm = driver.switch_to_active_element()
+    Confirm.send_keys(Keys.SPACE)
+    Confirm.send_keys(Keys.TAB)
+    time.sleep(1)
 
+    link = driver.switch_to_active_element()
+    link.send_keys(Keys.TAB)
+    time.sleep(1)
+    
+    
+    Create = driver.switch_to_active_element()
+    Create.send_keys(Keys.RETURN)
     
 login_to_twitter(driver)
-get_keys_of_first_app(driver)    
+create_app(driver)
+#get_keys_of_first_app(driver)    
