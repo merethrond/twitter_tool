@@ -105,6 +105,8 @@ def create_app(driver):
     
     Create = driver.switch_to_active_element()
     Create.send_keys(Keys.RETURN)
+
+    
     
 login_to_twitter(driver)
 #create_app(driver)
