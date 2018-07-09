@@ -8,19 +8,44 @@ Created on Wed Jul  4 21:59:51 2018
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+<<<<<<< HEAD
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+=======
 #from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.support import expected_conditions as EC
 #from selenium.webdriver.common.by import By
-
+import pandas as pd
+>>>>>>> 16e3b69afe0202485c4090d460748c73e8d95d99
 import os
 import time
-from access_keys import username, password
+# from access_keys import username, password
+from access_token import username, password
+
 from bs4 import BeautifulSoup
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+# DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+<<<<<<< HEAD
 
-driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+
+
+chrome_options = webdriver.ChromeOptions()
+prefs = {"profile.default_content_setting_values.notifications" : 2}
+chrome_options.add_experimental_option("prefs",prefs)
+driver = webdriver.Chrome(r'C:\Users\Admin\Desktop\chromedriver.exe', chrome_options=chrome_options)
+=======
+# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+
+chrome_options = webdriver.ChromeOptions()
+prefs = {"profile.default_content_setting_values.notifications" : 2}
+chrome_options.add_experimental_option("prefs",prefs)
+driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
+>>>>>>> 16e3b69afe0202485c4090d460748c73e8d95d99
+
 
 # twitter login process
 def login_to_twitter(driver):
@@ -43,7 +68,7 @@ def get_keys_of_first_app(driver):
     driver.get(driver.current_url[:-4] + "keys")
     page = (driver.page_source)
     #comment out the line below in case you want to leave the browser open after calling this function.
-    driver.close()
+    # driver.close()
     
     tokenSoup = BeautifulSoup(page,"html.parser")#,"lxml")
     consumer_tokens = tokenSoup.select(".app-settings > .row > span")
@@ -53,6 +78,7 @@ def get_keys_of_first_app(driver):
     try:
         get_access = driver.find_element_by_name("op")
         get_access.click()
+        driver.get(driver.current_url)
     except:
         print("No access button found")
     access_tokens = tokenSoup.select(".access > .row > span")
@@ -60,6 +86,11 @@ def get_keys_of_first_app(driver):
     access_token_secret = access_tokens[3].string
     print("access_token:", access_token, "access_token_secret:", access_token_secret, sep = '\n')
     
+    credential_list = [[access_token_secret,access_token,consumer_secret,consumer_key]]
+
+    return credential_list
+
+
 def create_app(driver):
     driver.get('https://apps.twitter.com/')
   
@@ -67,11 +98,11 @@ def create_app(driver):
     New_app.send_keys(Keys.RETURN)
     
     name = driver.find_element_by_name("name")
-    name.send_keys("John Abraham")
+    name.send_keys("xvcvvbvbnmmn")
     name.send_keys(Keys.TAB)
     
     description = driver.switch_to_active_element()
-    description.send_keys("Force and Rocky handsome")
+    description.send_keys("All the flop films")
     description.send_keys(Keys.TAB)
     
     website = driver.switch_to_active_element()
@@ -108,6 +139,16 @@ def create_app(driver):
 
     
     
-login_to_twitter(driver)
-#create_app(driver)
-get_keys_of_first_app(driver)    
+def to_excel():
+    df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
+
+    # list = [[access_token_secret,access_token,consumer_secret,consumer_key]]
+    df = df.append(pd.DataFrame(credentials, columns=['Access Secret','Access Token','Consumer Secret','Consumer Token']),ignore_index=True)
+
+    df.to_excel('filename.xlsx')
+    print(df)
+
+create_app(driver)
+credentials = get_keys_of_first_app(driver)
+to_excel()
+
