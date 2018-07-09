@@ -8,10 +8,16 @@ Created on Wed Jul  4 21:59:51 2018
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+<<<<<<< HEAD
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+=======
+#from selenium.webdriver.support.ui import WebDriverWait
+#from selenium.webdriver.support import expected_conditions as EC
+#from selenium.webdriver.common.by import By
+>>>>>>> 99393e06045deadaafe96b7f588a728377701c98
 
 #from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.support import expected_conditions as EC
@@ -20,6 +26,7 @@ import pandas as pd
 import os
 import time
 from access_keys import username, password
+<<<<<<< HEAD
 # from access_token import username, password
 
 from bs4 import BeautifulSoup
@@ -40,6 +47,28 @@ driver = webdriver.Chrome(r'C:\Users\Admin\Desktop\chromedriver.exe', chrome_opt
 # prefs = {"profile.default_content_setting_values.notifications" : 2}
 # chrome_options.add_experimental_option("prefs",prefs)
 # driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
+=======
+#from access_token import username, password
+
+from bs4 import BeautifulSoup
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+#
+#
+#chrome_options = webdriver.ChromeOptions()
+#prefs = {"profile.default_content_setting_values.notifications" : 2}
+#chrome_options.add_experimental_option("prefs",prefs)
+#driver = webdriver.Chrome(r'C:\Users\Admin\Desktop\chromedriver.exe', chrome_options=chrome_options)
+
+# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+
+#chrome_options = webdriver.ChromeOptions()
+#prefs = {"profile.default_content_setting_values.notifications" : 2}
+#chrome_options.add_experimental_option("prefs",prefs)
+#driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
+>>>>>>> 99393e06045deadaafe96b7f588a728377701c98
 
 
 # twitter login process
@@ -133,8 +162,10 @@ def create_app(driver):
     
     Create = driver.switch_to_active_element()
     Create.send_keys(Keys.RETURN)
+
     
-def to_excel():
+    
+def to_excel(credentials):
     df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
 
     # list = [[access_token_secret,access_token,consumer_secret,consumer_key]]
@@ -143,8 +174,23 @@ def to_excel():
     df.to_excel('filename.xlsx')
     print(df)
 
+<<<<<<< HEAD
 login_to_twitter(driver)
 # create_app(driver)
 credentials = get_keys_of_first_app(driver)
 to_excel()
+=======
+def delete_first_app(driver):
+    driver.get('https://apps.twitter.com/')
+    elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
+    elem.click()
+    driver.get(driver.current_url[:-4] + "delete")
+    elem = driver.find_element_by_name("op")
+    elem.click()
 
+login_to_twitter(driver)
+#create_app(driver)
+>>>>>>> 99393e06045deadaafe96b7f588a728377701c98
+
+#to_excel(get_keys_of_first_app(driver))
+delete_first_app(driver)
