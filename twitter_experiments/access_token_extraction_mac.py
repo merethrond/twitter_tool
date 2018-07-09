@@ -11,16 +11,23 @@ from selenium.webdriver.common.keys import Keys
 #from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.support import expected_conditions as EC
 #from selenium.webdriver.common.by import By
-
+import pandas as pd
 import os
 import time
-from access_keys import username, password
+# from access_keys import username, password
+from access_token import username, password
+
 from bs4 import BeautifulSoup
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+# DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
 
-driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+chrome_options = webdriver.ChromeOptions()
+prefs = {"profile.default_content_setting_values.notifications" : 2}
+chrome_options.add_experimental_option("prefs",prefs)
+driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
+
 
 # twitter login process
 def login_to_twitter(driver):
@@ -60,6 +67,11 @@ def get_keys_of_first_app(driver):
     access_token_secret = access_tokens[3].string
     print("access_token:", access_token, "access_token_secret:", access_token_secret, sep = '\n')
     
+    credential_list = [[access_token_secret,access_token,consumer_secret,consumer_key]]
+
+    return credential_list
+
+
 def create_app(driver):
     driver.get('https://apps.twitter.com/')
   
@@ -106,6 +118,18 @@ def create_app(driver):
     Create = driver.switch_to_active_element()
     Create.send_keys(Keys.RETURN)
     
+def to_excel():
+    df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
+
+    # list = [[access_token_secret,access_token,consumer_secret,consumer_key]]
+    df = df.append(pd.DataFrame(credentials, columns=['Access Secret','Access Token','Consumer Secret','Consumer Token']),ignore_index=True)
+
+    df.to_excel('filename.xlsx')
+    print(df)
+
 login_to_twitter(driver)
-#create_app(driver)
-get_keys_of_first_app(driver)    
+# create_app(driver)
+credentials = get_keys_of_first_app(driver)
+# get_keys_of_first_app(driver)    
+to_excel()
+
