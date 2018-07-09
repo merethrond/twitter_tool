@@ -8,19 +8,26 @@ Created on Wed Jul  4 21:59:51 2018
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-#from selenium.webdriver.support.ui import WebDriverWait
-#from selenium.webdriver.support import expected_conditions as EC
-#from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 import os
 import time
 from access_keys import username, password
 from bs4 import BeautifulSoup
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+# DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
 
-driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+
+
+chrome_options = webdriver.ChromeOptions()
+prefs = {"profile.default_content_setting_values.notifications" : 2}
+chrome_options.add_experimental_option("prefs",prefs)
+driver = webdriver.Chrome(r'C:\Users\Admin\Desktop\chromedriver.exe', chrome_options=chrome_options)
+
 
 # twitter login process
 def login_to_twitter(driver):
@@ -43,7 +50,7 @@ def get_keys_of_first_app(driver):
     driver.get(driver.current_url[:-4] + "keys")
     page = (driver.page_source)
     #comment out the line below in case you want to leave the browser open after calling this function.
-    driver.close()
+    # driver.close()
     
     tokenSoup = BeautifulSoup(page,"html.parser")#,"lxml")
     consumer_tokens = tokenSoup.select(".app-settings > .row > span")
@@ -53,6 +60,7 @@ def get_keys_of_first_app(driver):
     try:
         get_access = driver.find_element_by_name("op")
         get_access.click()
+        driver.get(driver.current_url)
     except:
         print("No access button found")
     access_tokens = tokenSoup.select(".access > .row > span")
@@ -67,11 +75,11 @@ def create_app(driver):
     New_app.send_keys(Keys.RETURN)
     
     name = driver.find_element_by_name("name")
-    name.send_keys("John Abraham")
+    name.send_keys("xvcvvbvbnmmn")
     name.send_keys(Keys.TAB)
     
     description = driver.switch_to_active_element()
-    description.send_keys("Force and Rocky handsome")
+    description.send_keys("All the flop films")
     description.send_keys(Keys.TAB)
     
     website = driver.switch_to_active_element()
@@ -107,5 +115,5 @@ def create_app(driver):
     Create.send_keys(Keys.RETURN)
     
 login_to_twitter(driver)
-#create_app(driver)
+create_app(driver)
 get_keys_of_first_app(driver)    
