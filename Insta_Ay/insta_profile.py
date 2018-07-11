@@ -21,12 +21,20 @@ chrome_options.add_experimental_option("prefs",prefs)
 driver = webdriver.Chrome(r'C:\Users\Ayush\Desktop\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
 
 
+
 def follower_extraction():
 
 	following_list = pd.read_excel('following.xlsx')
 	listname = following_list['babiabhalla'].unique()
 	return listname
 
+def scroll_follow_till_end():
+
+	user_profile = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,".Szr5J.kIKUG.coreSpriteDesktopNavProfile")))
+	user_profile.click()
+	time.sleep(3)
+	li_list = driver.find_elements_by_tag_name('li')
+	li_list[2].click()
 	# print(following_list)
 	# # print(type(following_list))
 	# print(following_list.keys())
@@ -68,7 +76,7 @@ def liker():
 		first_image = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//div[@class="_9AhH0"]')))
 		# first_image = driver.find_element_by_xpath('')
 	except:
-		print('unable to open image, shifting to next profile')
+	user	print('unable to open image, shifting to next profile')
 		return 	
 
 	first_image.click()
