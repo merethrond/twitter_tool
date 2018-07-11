@@ -1,28 +1,30 @@
 from bs4 import BeautifulSoup as bs
-from urllib.request import urlopen as ureq 
+from urllib.request import urlopen as ureq
 from time import sleep
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.by import By
+# from selenium.common.exceptions import TimeoutException
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support.ui import Select
+# from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions
-from selenium.common.exceptions import NoSuchElementException
+# from selenium.webdriver.support import expected_conditions
+# from selenium.common.exceptions import NoSuchElementException
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 
-# from access_keys import username, password 
+# from access_keys import username, password
 from excelReader import credentials
 account =('https://apps.twitter.com/')
 '''
 Use this in case of windows.
 '''
-chrome_options = webdriver.ChromeOptions()
-prefs = {"profile.default_content_setting_values.notifications" : 2}
-chrome_options.add_experimental_option("prefs",prefs)
+# chrome_options = webdriver.ChromeOptions()
+# prefs = {"profile.default_content_setting_values.notifications" : 2}
+# chrome_options.add_experimental_option("prefs",prefs)
 # driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
-
+'''
+In case of mac.
+'''
 # import os
 # PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 # DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
@@ -38,9 +40,9 @@ chrome_options.add_experimental_option("prefs",prefs)
 
 
 for username in credentials:
-
-	driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
-	time.sleep(3)	
+	driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+	# driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
+	time.sleep(3)
 	driver.get(account)
 	signIn = driver.find_element_by_xpath('//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]');
 	signIn.click()
@@ -114,9 +116,8 @@ for username in credentials:
 # Akmal_app = driver.find_element_by_xpath("//a[@href ='app/15260788/show']").click()
 # time.sleep(5)
 # driver.find_element_by_xpath('//div[contains(text(), "Keys and Access Tokens")]').click()
-driver.get(driver.current_url + "/keys")
-# page = (driver.page_source)
-
-get_access = driver.find_element_by_name("op")
-get_access.click()
-
+# driver.get(driver.current_url + "/keys")
+# # page = (driver.page_source)
+#
+# get_access = driver.find_element_by_name("op")
+# get_access.click()
