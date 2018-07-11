@@ -19,9 +19,9 @@ from access_keys import username, password
 from bs4 import BeautifulSoup
 
 #Abhishek
-#PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-#DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
-#driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+# DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
 
 #Akmal
 #chrome_options = webdriver.ChromeOptions()
@@ -92,11 +92,11 @@ def create_app(driver):
     New_app.send_keys(Keys.RETURN)
 
     name = driver.find_element_by_name("name")
-    name.send_keys("mai pro hun")
+    name.send_keys("trial__2")
     name.send_keys(Keys.TAB)
 
     description = driver.switch_to_active_element()
-    description.send_keys("All the new films")
+    description.send_keys("Trying out the twitter APIs")
     description.send_keys(Keys.TAB)
 
     website = driver.switch_to_active_element()
@@ -153,7 +153,8 @@ def delete_first_app(driver):
     elem.click()
     time.sleep(4)
 
-#login_to_twitter(driver)
-#delete_first_app(driver)
-#create_app(driver)
-#to_excel(get_keys_of_first_app(driver))
+# login_to_twitter(driver)
+# delete_first_app(driver)
+# create_app(driver)
+# #to_excel(get_keys_of_first_app(driver))
+# print(get_keys_of_first_app(driver))
