@@ -32,6 +32,19 @@ def follower_extraction():
 	listname = following_list['babiabhalla'].unique()
 	return listname
 
+
+# diff_count = 0
+
+# def check_difference_in_count(driver):
+
+# 	new_count = len(driver.find_elements_by_xpath("//div[@role='dialog']//li"))
+
+# 	if diff_count != new_count:
+# 		diff_count = new_count
+# 		return True
+# 	else:
+# 		return False
+		
 def scroll_follow_till_end():
 
 	user_profile = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,".Szr5J.kIKUG.coreSpriteDesktopNavProfile")))
@@ -39,6 +52,56 @@ def scroll_follow_till_end():
 	time.sleep(3)
 	li_list = driver.find_elements_by_tag_name('li')
 	li_list[2].click()
+	time.sleep(3)
+
+	# if (check_difference_in_count):
+	# global diff_count
+	counter = 0
+	while(counter != 10):
+		fol_list = driver.find_elements_by_xpath("//div[@role='dialog']//li//a")
+		print(len(fol_list))
+		for i in fol_list:
+			i.send_keys(Keys.END)
+		counter += 1
+		print(counter)
+			
+
+
+
+
+			
+			# time.sleep(1)
+	# 	if(check_difference_in_count(driver) == 'False'):
+	# while 1:
+		# scroll down		
+		# fol.send_keys(Keys.END)
+		# driver.execute_script("document.querySelector('div[role=dialog] ul').parentNode.scrollTop=1e100")
+
+	# 	try:
+	# 		WebDriverWait(driver, 5).until(check_difference_in_count)
+	# 	except:
+	# 		break
+	# # while (1):
+	# 		break
+
+	# print(fol_list)
+	# dialog = driver.find_elements_by_tag_name('ul')
+	# for i in dialog:
+		# print(i.text)
+	# driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", dialog)
+# # The difference in the amount of users can be checked using the following function
+# # And the following script scrolls down the user container until it has reached the bottom
+
+# 	while 1:
+# 		# scroll down
+		
+# 		driver.execute_script("document.querySelector('div[role=dialog] ul').parentNode.scrollTop=1e100")
+
+# 		try:
+# 			WebDriverWait(driver, 5).until(check_difference_in_count)
+# 		except:
+# 			break
+
 
 	# print(following_list)
 	# # print(type(following_list))
@@ -113,8 +176,6 @@ def liker():
 	# for i in heart_children:
 	# 	print("i",i.text)
 	# print("heart",heart.text)	
-
-
 
 
 login()	
