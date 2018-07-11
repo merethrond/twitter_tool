@@ -18,7 +18,11 @@ from selenium.webdriver.support import expected_conditions as EC
 chrome_options = webdriver.ChromeOptions()
 prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
-driver = webdriver.Chrome(r'C:\Users\Ayush\Desktop\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
+#PC:
+#driver = webdriver.Chrome(r'C:\Users\Ayush\Desktop\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
+
+#LAPTOP:
+driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
 
 
 
@@ -35,6 +39,7 @@ def scroll_follow_till_end():
 	time.sleep(3)
 	li_list = driver.find_elements_by_tag_name('li')
 	li_list[2].click()
+
 	# print(following_list)
 	# # print(type(following_list))
 	# print(following_list.keys())
@@ -76,7 +81,7 @@ def liker():
 		first_image = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//div[@class="_9AhH0"]')))
 		# first_image = driver.find_element_by_xpath('')
 	except:
-	user	print('unable to open image, shifting to next profile')
+		print('unable to open image, shifting to next profile')
 		return 	
 
 	first_image.click()
@@ -113,8 +118,9 @@ def liker():
 
 
 login()	
-following_list = follower_extraction()
-profile_opener(following_list)
+scroll_follow_till_end()
+# following_list = follower_extraction()
+# profile_opener(following_list)
 
 # _9AhH0 - fist image of profile class
 # fr66n - span class in feed/image of profile for heart
