@@ -1,11 +1,23 @@
 from bs4 import BeautifulSoup
 import pandas as pd
 import xlsxwriter
+
+
+# from selenium import webdriver
+# from selenium.webdriver.common.keys import Keys
+
+from insta_profile import *
+
+# from insta_key import username, password
 # page_url = (open(r"C:\testDir\Bots\twitter_experiments\appKey.html"), "html.parser")
 # soup = BeautifulSoup(page_url,"html.parser")#,"lxml")
-with open(r"C:\testDir\instagram\ayInsta2.html", 'rb') as html:
-    soup = BeautifulSoup(html,"html.parser")
+# login()
+# scroll_follow_till_end()
 
+# url = driver.current_url
+# page = open(url)
+page = (driver.page_source)
+soup = BeautifulSoup(page,'html.parser')
     
 # url = 
 # page = open(url)
@@ -26,8 +38,8 @@ for i in following:
 
 workbook = xlsxwriter.Workbook('following.xlsx')
 worksheet = workbook.add_worksheet()
-
-worksheet.write_column('A1',following_list)
+worksheet.write('A1','Following List')
+worksheet.write_column('A2',following_list)
 # def to_excel(credentials):
 # df = pd.read_excel('following.xlsx', sheet_name = "Sheet1")
 

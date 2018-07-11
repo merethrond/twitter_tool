@@ -29,7 +29,7 @@ driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chr
 def follower_extraction():
 
 	following_list = pd.read_excel('following.xlsx')
-	listname = following_list['babiabhalla'].unique()
+	listname = following_list['Following List'].unique()
 	return listname
 
 
@@ -57,13 +57,14 @@ def scroll_follow_till_end():
 	# if (check_difference_in_count):
 	# global diff_count
 	counter = 0
-	while(counter != 10):
+	while(counter != 20):
 		fol_list = driver.find_elements_by_xpath("//div[@role='dialog']//li//a")
 		print(len(fol_list))
 		for i in fol_list:
 			i.send_keys(Keys.END)
 		counter += 1
 		print(counter)
+
 			
 
 
