@@ -12,9 +12,9 @@ import pandas as pd
 import os
 import time
 
-from access_keys import username, password
-
+# from access_keys import username, p÷assword
 #from access_token import username, password
+from excelReader import credentials
 
 from bs4 import BeautifulSoup
 
@@ -37,7 +37,7 @@ from bs4 import BeautifulSoup
 
 
 # twitter login process
-def login_to_twitter(driver):
+def login_to_twitter(driver, username, password):
     driver.get('https://twitter.com/login')
     print(driver.title)
     #elem = WebDriverWait(driver, 30).presence_of_element_located(By.NAME, "session")
@@ -48,7 +48,6 @@ def login_to_twitter(driver):
     elem = driver.switch_to_active_element()
     elem.send_keys(password)
     elem.send_keys(Keys.RETURN)
-
 #Get the access tokens of the already created apps.
 def get_keys_of_first_app(driver):
     driver.get('https://apps.twitter.com/')
