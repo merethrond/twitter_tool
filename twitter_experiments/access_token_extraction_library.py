@@ -48,7 +48,7 @@ def login_to_twitter(driver, username, password):
     print("Twitter app opened")
 
     email = driver.switch_to_active_element()
-    time.sleep(1)
+    time.sleep(2)
     email.send_keys(username)
     email.send_keys(Keys.TAB)
     print("email entered")
@@ -59,7 +59,7 @@ def login_to_twitter(driver, username, password):
     email.send_keys(Keys.RETURN)
     print("password entered")
 
-    time.sleep(2)
+    time.sleep(1)
     print("Logged in")
 #Get the access tokens of the already created apps.
 def get_keys_of_first_app(driver):
