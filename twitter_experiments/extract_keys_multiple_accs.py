@@ -17,12 +17,14 @@ create_app, to_excel, delete_first_app
 from excelReader import credentials
 
 def create_apps_save_keys():
+    app_name_index = 0
     for username in credentials.keys():
         driver = webdriver.Chrome(executable_path = DRIVER_BIN)
         login_to_twitter(driver, username, credentials[username])
-        create_app(driver)
+        create_app(driver, "trial__" + app_name_index)
         to_excel(get_keys_of_first_app(driver), username)
         driver.close()
+        app_name_index += 1
 def delete_multiple_apps():
     for username in credentials.keys():
         driver = webdriver.Chrome(executable_path = DRIVER_BIN)
