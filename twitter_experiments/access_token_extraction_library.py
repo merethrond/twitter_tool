@@ -144,7 +144,7 @@ def create_app(driver):
 
 
 
-def to_excel(credential_list):
+def to_excel(credential_list, username):
     df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
 
     df = df.append(pd.DataFrame([[username] + credential_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
@@ -174,5 +174,5 @@ def delete_first_app(driver):
 # login_to_twitter(driver, username, password)
 # delete_first_app(driver)
 # create_app(driver)
-# to_excel(get_keys_of_first_app(driver))
+# to_excel(get_keys_of_first_app(driver), username)
 # print(get_keys_of_first_app(driver))
