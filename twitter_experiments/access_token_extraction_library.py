@@ -96,14 +96,14 @@ def get_keys_of_first_app(driver):
     return credential_list
 
 
-def create_app(driver):
+def create_app(driver, app_name):
     driver.get('https://apps.twitter.com/')
 
     New_app = driver.find_element_by_xpath("//a[@href ='/app/new']")
     New_app.send_keys(Keys.RETURN)
 
     name = driver.find_element_by_name("name")
-    name.send_keys("trial__1")
+    name.send_keys(app_name)
     name.send_keys(Keys.TAB)
 
     description = driver.switch_to_active_element()
@@ -173,6 +173,6 @@ def delete_first_app(driver):
 
 # login_to_twitter(driver, username, password)
 # delete_first_app(driver)
-# create_app(driver)
+# create_app(driver, app_name = 'trial___1')
 # to_excel(get_keys_of_first_app(driver), username)
 # print(get_keys_of_first_app(driver))
