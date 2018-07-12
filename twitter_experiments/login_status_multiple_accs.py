@@ -1,25 +1,12 @@
 from bs4 import BeautifulSoup as bs
-from urllib.request import urlopen as ureq
 from time import sleep
 from selenium import webdriver
-# from selenium.common.exceptions import TimeoutException
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support.ui import Select
-# from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.support import expected_conditions
-# from selenium.common.exceptions import NoSuchElementException
 import time
-from selenium.webdriver.common.action_chains import ActionChains
 
-# from access_keys import username, password
-# from excelReader import credentials
 import pandas as pd
 file_name = "email_credentials.xlsx"
 excel_data = pd.read_excel(file_name)
-
-
-
 '''
 Use this in case of windows.
 '''

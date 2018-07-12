@@ -8,4 +8,4 @@ def convert_to_dictionary():
     return {i:j for i, j, k in zip(excel_data.username, excel_data.password, excel_data.issues) if k == 'active'}
 
 credentials = convert_to_dictionary()
-print(credentials)
+# print(len(credentials))

@@ -4,13 +4,13 @@ import pandas as pd
 import os
 import time
 
-# from access_keys import username, p÷assword
+# from access_keys import username, password
 #from access_token import username, password
-from excelReader import credentials
+# from excelReader import credentials
 
 from bs4 import BeautifulSoup
 
-#Abhishek
+# Abhishek
 # PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 # DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
 # driver = webdriver.Chrome(executable_path = DRIVER_BIN)
@@ -30,16 +30,36 @@ from bs4 import BeautifulSoup
 
 # twitter login process
 def login_to_twitter(driver, username, password):
-    driver.get('https://twitter.com/login')
-    print(driver.title)
-    #elem = WebDriverWait(driver, 30).presence_of_element_located(By.NAME, "session")
-    elem = driver.switch_to_active_element()
-    #elem = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.NAME, 'session[username_or_email]')))
-    elem.send_keys(username)
-    elem.send_keys(Keys.TAB)
-    elem = driver.switch_to_active_element()
-    elem.send_keys(password)
-    elem.send_keys(Keys.RETURN)
+    # driver.get('https://twitter.com/login')
+    # print(driver.title)
+    # elem = driver.switch_to_active_element()
+    # elem.send_keys(username)
+    # elem.send_keys(Keys.TAB)
+    # elem = driver.switch_to_active_element()
+    # elem.send_keys(password)
+    # elem.send_keys(Keys.RETURN)
+
+    account = 'https://apps.twitter.com/'
+    time.sleep(1)
+    driver.get(account)
+    signIn = driver.find_element_by_xpath('//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]');
+    signIn.click()
+    print("Twitter app opened")
+
+    email = driver.switch_to_active_element()
+    time.sleep(1)
+    email.send_keys(username)
+    email.send_keys(Keys.TAB)
+    print("email entered")
+
+    time.sleep(1)
+    email = driver.switch_to_active_element()
+    email.send_keys(password)
+    email.send_keys(Keys.RETURN)
+    print("password entered")
+
+    time.sleep(2)
+    print("Logged in")
 #Get the access tokens of the already created apps.
 def get_keys_of_first_app(driver):
     driver.get('https://apps.twitter.com/')
@@ -66,12 +86,12 @@ def get_keys_of_first_app(driver):
     page = (driver.page_source)
     tokenSoup = BeautifulSoup(page,"html.parser")#,"lxml")
     access_tokens = tokenSoup.select(".access > .row > span")
-    print(access_tokens)
+    # print(access_tokens)
     access_token = access_tokens[1].string
     access_token_secret = access_tokens[3].string
     print("access_token:", access_token, "access_token_secret:", access_token_secret, sep = '\n')
 
-    credential_list = [[access_token_secret,access_token,consumer_secret,consumer_key]]
+    credential_list = [consumer_key,consumer_secret,access_token,access_token_secret]
 
     return credential_list
 
@@ -83,7 +103,7 @@ def create_app(driver):
     New_app.send_keys(Keys.RETURN)
 
     name = driver.find_element_by_name("name")
-    name.send_keys("trial__2")
+    name.send_keys("trial__1")
     name.send_keys(Keys.TAB)
 
     description = driver.switch_to_active_element()
@@ -124,28 +144,35 @@ def create_app(driver):
 
 
 
-def to_excel(credentials):
+def to_excel(credential_list):
     df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
 
-    # list = [[access_token_secret,access_token,consumer_secret,consumer_key]]
-    df = df.append(pd.DataFrame(credentials, columns=['Access Secret','Access Token','Consumer Secret','Consumer Token']),ignore_index=True)
+    df = df.append(pd.DataFrame([[username] + credential_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
 
     df.to_excel('filename.xlsx')
     print(df)
 
 
+
 def delete_first_app(driver):
     driver.get('https://apps.twitter.com/')
-    elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
-    elem.click()
-    driver.get(driver.current_url[:-4] + "delete")
-    elem = driver.find_element_by_name("op")
-    time.sleep(4)
-    elem.click()
-    time.sleep(4)
+    try:
+        elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
+        elem.click()
+        driver.get(driver.current_url[:-4] + "delete")
+        elem = driver.find_element_by_name("op")
+        time.sleep(4)
+        elem.click()
+        time.sleep(4)
+        print("App deleted")
+    except:
+        print("Error: No app found")
 
-# login_to_twitter(driver)
+    # driver.close()
+
+
+# login_to_twitter(driver, username, password)
 # delete_first_app(driver)
 # create_app(driver)
-# #to_excel(get_keys_of_first_app(driver))
+# to_excel(get_keys_of_first_app(driver))
 # print(get_keys_of_first_app(driver))
