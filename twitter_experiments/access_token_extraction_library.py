@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul  4 21:59:51 2018
-
-@author: tuffy
-"""
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
