@@ -29,7 +29,7 @@ def delete_multiple_apps():
     for username in credentials.keys():
         driver = webdriver.Chrome(executable_path = DRIVER_BIN)
         login_to_twitter(driver, username, credentials[username])
-        delete_first_app(driver)
+        delete_first_app(driver, username)
         driver.close()
 # delete_multiple_apps()
-create_apps_save_keys()
+# create_apps_save_keys()

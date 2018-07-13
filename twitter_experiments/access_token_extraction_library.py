@@ -155,7 +155,7 @@ def to_excel(credential_list, username):
 
 
 
-def delete_first_app(driver):
+def delete_first_app(driver, username):
     driver.get('https://apps.twitter.com/')
     try:
         elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
@@ -166,14 +166,21 @@ def delete_first_app(driver):
         elem.click()
         time.sleep(4)
         print("App deleted")
+        #Removing the username entry from the excel file.
+        #This will remove multiple entries as well.
+        df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
+        df = df[df.username != username]
+        df.to_excel('filename.xlsx')
+
+
     except:
-        print("Error: No app found")
+        print("Error: No app found, or error in excel deletion.")
 
     # driver.close()
 
 
 # login_to_twitter(driver, username, password)
-# delete_first_app(driver)
+# delete_first_app(driver, username)
 # create_app(driver, app_name = 'trial___1')
 # to_excel(get_keys_of_first_app(driver), username)
 # print(get_keys_of_first_app(driver))
