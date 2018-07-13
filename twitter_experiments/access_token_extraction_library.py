@@ -40,15 +40,13 @@ def login_to_twitter(driver, username, password):
     # elem.send_keys(Keys.RETURN)
 
     account = 'https://apps.twitter.com/'
-    time.sleep(1)
     driver.get(account)
     signIn = driver.find_element_by_xpath('//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]');
     signIn.click()
     print("Username:", username)
     print("Twitter app opened")
-
-    email = driver.switch_to_active_element()
     time.sleep(2)
+    email = driver.switch_to_active_element()
     email.send_keys(username)
     email.send_keys(Keys.TAB)
     print("email entered")
