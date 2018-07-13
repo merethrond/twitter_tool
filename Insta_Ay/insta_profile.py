@@ -7,7 +7,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+# import pandas as pd
+import xlsxwriter
 
 # from insta_beautiful_extraction import following_list
 
@@ -56,16 +57,32 @@ def scroll_follow_till_end():
 
 	# if (check_difference_in_count):
 	# global diff_count
-	counter = 0
-	while(counter != 20):
-		fol_list = driver.find_elements_by_xpath("//div[@role='dialog']//li//a")
-		print(len(fol_list))
-		for i in fol_list:
-			i.send_keys(Keys.END)
-		counter += 1
-		print(counter)
+	# counter = 0
+	# while(counter != 20):
+	# 	fol_list = driver.find_elements_by_xpath("//div[@role='dialog']//li//a")
+	# 	print(len(fol_list))
+	# 	for i in fol_list:
+	# 		i.send_keys(Keys.END)
+	# 	counter += 1
+	# 	print(counter)
 
-			
+	prev = 0
+	new = 0
+
+	while(1):
+		fol_list = driver.find_elements_by_xpath("//div[@role='dialog']//li//a")
+		new = len(fol_list)
+		# print("fol_list count:",new)
+		if(new == prev):
+			break
+		else:
+			prev = new
+
+		run_for = len(fol_list)/5
+		
+		for i in range(int(run_for)):
+			fol_list[0].send_keys(Keys.END)
+			fol_list[0].send_keys(Keys.PAGE_DOWN)
 
 
 
@@ -116,6 +133,7 @@ def scroll_follow_till_end():
 
 # for i in listname:
 # 	print(i)
+not_accessible = []
 
 def login():
 	login_page = ("https://www.instagram.com/accounts/login/")
@@ -133,23 +151,25 @@ def profile_opener(following_list):
 	print('opening profile:')
 	for i in following_list:
 		driver.get("https://www.instagram.com/"+i)
-		liker()
+		liker(i)
 	# driver.get("https://www.instagram.com/"+"punsworld")
 	# liker()
 	
 		# time.sleep(6)
 
-def liker():
+def liker(i):
 	# time.sleep(2)
 	try:
-		first_image = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//div[@class="_9AhH0"]')))
+		first_image = WebDriverWait(driver, 6).until(EC.presence_of_element_located((By.XPATH, '//div[@class="_9AhH0"]')))
+		print('\n## Accessing Account',i,'##\n')
 		# first_image = driver.find_element_by_xpath('')
 	except:
-		print('unable to open image, shifting to next profile')
+		print('ERROR: unable to open image of acc',i,'shifting to next profile')
+		not_accessible.append(i)
 		return 	
 
 	first_image.click()
-	time.sleep(2)
+	time.sleep(1.6)
 	count = 0
 
 	actions = ActionChains(driver)
@@ -158,33 +178,43 @@ def liker():
 		heart = WebDriverWait(driver, 6).until(EC.presence_of_element_located((By.XPATH, '//span[@class="fr66n"]')))
 		# heart = driver.find_element_by_xpath('//span[@class="fr66n"]')
 		if(heart.text) == "Like":
-			print('liking image',count)
+			print('# liking image',count,'#')
 			heart.click()
 		count += 1
 
-		time.sleep(1)
+		time.sleep(0.7)
 
 		actions.send_keys(Keys.RIGHT)
 		actions.perform()
-		time.sleep(1.5)
+		time.sleep(0.8)
 	return	
 		# right = driver.find_element_by_xpath('//a[@class="coreSpriteRightPaginationArrow"]')
 		# right.click()
 		# heart_children = heart.find_elements_by_css_selector("*")
 	# heart = driver.find_element_by_xpath('//span[@class="fr66n"]')
 	# heart_children = heart.find_elements_by_css_selector("*")
-	# # print(heart_children)
+	# # print(heanrt_children)
 	# for i in heart_children:
 	# 	print("i",i.text)
 	# print("heart",heart.text)	
+def unable_to_access():
+	workbook = xlsxwriter.Workbook('no_access.xlsx')
+	worksheet = workbook.add_worksheet()
+	worksheet.write('A1','Not Accessible')
+	worksheet.write_column('A2',not_accessible)
 
 
 login()	
-scroll_follow_till_end()
-# following_list = follower_extraction()
-# profile_opener(following_list)
-
-# _9AhH0 - fist image of profile class
+# scroll_follow_till_end()
+following_list = follower_extraction()
+profile_opener(following_list)
+unable_to_access()
+# _9AhH0 - fist image of profile class ClassName(object):
+	"""docstring for ClassName"""
+	def __init__(self, arg):
+		super(ClassName, self).__init__()
+		self.arg = arg
+		
 # fr66n - span class in feed/image of profile for heart
 # for i in following_list:
 # 	print(i)
