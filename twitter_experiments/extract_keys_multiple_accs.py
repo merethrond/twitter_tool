@@ -44,7 +44,8 @@ def login_and_wait():
     for username in df.username:
         driver = webdriver.Chrome(executable_path = DRIVER_BIN)
         login_to_twitter(driver, username, credentials[username])
-        time.sleep(10)
+        driver.get("http://www.twitter.com")
+    time.sleep(30)
 # delete_multiple_apps()
 # create_apps_save_keys()
 login_and_wait()
