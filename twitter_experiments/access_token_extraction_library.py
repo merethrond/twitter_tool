@@ -4,16 +4,16 @@ import pandas as pd
 import os
 import time
 
-# from access_keys import username, password
+#from access_keys import username, password
 #from access_token import username, password
 # from excelReader import credentials
 
 from bs4 import BeautifulSoup
 
 # Abhishek
-# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-# DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
-# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+#PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+#DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+#driver = webdriver.Chrome(executable_path = DRIVER_BIN)
 
 #Akmal
 #chrome_options = webdriver.ChromeOptions()
@@ -145,9 +145,17 @@ def create_app(driver, app_name):
 
 def to_excel(credential_list, username):
     df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
-
-    df = df.append(pd.DataFrame([[username] + credential_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
-
+    
+    try:
+        df_index = int(df[df.username == username].index.to_native_types()[0])
+        df.loc[df_index, 'consumer_key'] = credential_list[0]
+        df.loc[df_index, 'consumer_secret'] = credential_list[1]
+        df.loc[df_index, 'access_token'] = credential_list[2]
+        df.loc[df_index, 'access_token_secret'] = credential_list[3]
+      
+    except IndexError:
+        df = df.append(pd.DataFrame([[username] + credential_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
+        
     df.to_excel('filename.xlsx')
     print(df)
 
@@ -177,8 +185,8 @@ def delete_first_app(driver, username):
     # driver.close()
 
 
-# login_to_twitter(driver, username, password)
+login_to_twitter(driver, username, password)
 # delete_first_app(driver, username)
 # create_app(driver, app_name = 'trial___1')
-# to_excel(get_keys_of_first_app(driver), username)
+to_excel(get_keys_of_first_app(driver), username)
 # print(get_keys_of_first_app(driver))
