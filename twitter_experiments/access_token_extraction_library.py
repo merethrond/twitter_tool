@@ -4,9 +4,9 @@ import pandas as pd
 import os
 import time
 
-#from access_keys import username, password
-#from access_token import username, password
 # from excelReader import credentials
+# from key_file_vault import access_keys_excel, username, password
+
 
 from bs4 import BeautifulSoup
 
@@ -144,7 +144,7 @@ def create_app(driver, app_name):
 
 
 def to_excel(credential_list, username):
-    df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
+    df = pd.read_excel(access_keys_excel, sheet_name = "Sheet1")
     
     try:
         df_index = int(df[df.username == username].index.to_native_types()[0])
@@ -156,7 +156,7 @@ def to_excel(credential_list, username):
     except IndexError:
         df = df.append(pd.DataFrame([[username] + credential_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
         
-    df.to_excel('filename.xlsx')
+    df.to_excel(access_keys_excel)
     print(df)
 
 
@@ -174,19 +174,24 @@ def delete_first_app(driver, username):
         print("App deleted")
         #Removing the username entry from the excel file.
         #This will remove multiple entries as well.
-        df = pd.read_excel('filename.xlsx', sheet_name = "Sheet1")
+        df = pd.read_excel(access_keys_excel, sheet_name = "Sheet1")
         df = df[df.username != username]
-        df.to_excel('filename.xlsx')
+        df.to_excel(access_keys_excel)
 
 
     except:
         print("Error: No app found, or error in excel deletion.")
 
     # driver.close()
+def delete_from_excel(username):    
+    df = pd.read_excel(access_keys_excel, sheet_name = "Sheet1")
+    df = df[df.username != username]
+    df.to_excel(access_keys_excel)
 
 
-login_to_twitter(driver, username, password)
+#login_to_twitter(driver, username, password)
 # delete_first_app(driver, username)
 # create_app(driver, app_name = 'trial___1')
-to_excel(get_keys_of_first_app(driver), username)
+#to_excel(get_keys_of_first_app(driver), username)
 # print(get_keys_of_first_app(driver))
+#delete_from_excel(username)

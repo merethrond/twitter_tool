@@ -9,6 +9,7 @@ import os
 import time
 from pandas import read_excel
 from selenium import webdriver
+from key_file_vault import access_keys_excel
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
 
@@ -40,7 +41,10 @@ def collect_keys_multiple_apps():
         to_excel(get_keys_of_first_app(driver), username)
         driver.close()
 def login_and_wait():
-    df = read_excel("filename.xlsx")
+    """
+    Note: Login is done on only those credentials whose access details are there.
+    """
+    df = read_excel(access_keys_excel)
     for username in df.username:
         driver = webdriver.Chrome(executable_path = DRIVER_BIN)
         login_to_twitter(driver, username, credentials[username])
