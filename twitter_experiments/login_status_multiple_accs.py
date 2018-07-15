@@ -1,5 +1,3 @@
-from bs4 import BeautifulSoup as bs
-from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
@@ -17,9 +15,13 @@ Use this in case of windows.
 '''
 In case of mac.
 '''
-# import os
-# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-# DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+import os
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+
+'''
+In case of windows.
+'''
 
 # driver = webdriver.Chrome(executable_path = DRIVER_BIN)
 
@@ -29,11 +31,12 @@ In case of mac.
 # signIn.click()
 # print("Twitter app opened")
 
+#Current account active status
 # issues = ['not active', 'active', 'active', 'not active', 'active', 'active', 'active', 'active', 'not active']
 issues = []
 account =('https://apps.twitter.com/')
 for username, password in zip(excel_data.username, excel_data.password):
-   # driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+   driver = webdriver.Chrome(executable_path = DRIVER_BIN)
 	# driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
    time.sleep(1)
    driver.get(account)
