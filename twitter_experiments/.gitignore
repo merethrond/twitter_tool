@@ -5,3 +5,5 @@ access_keys.py
 __pycache__/
 filename.xlsx
 debug.log
+twitter_api_multi_accs.ipynb
+twitter_trials.ipynb
