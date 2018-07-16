@@ -5,15 +5,15 @@ import os
 import time
 
 # from excelReader import credentials
-# from key_file_vault import access_keys_excel, username, password
+# from key_file_vault import username, password
 
 
 from bs4 import BeautifulSoup
 
 # Abhishek
-#PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-#DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
-#driver = webdriver.Chrome(executable_path = DRIVER_BIN)
+# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+# DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
 
 #Akmal
 #chrome_options = webdriver.ChromeOptions()
@@ -141,21 +141,31 @@ def create_app(driver, app_name):
     Create = driver.switch_to_active_element()
     Create.send_keys(Keys.RETURN)
 
+def create_or_get_keys(driver, app_name):
+    driver.get('https://apps.twitter.com/')
+    try:
+        elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
+    except:
+        create_app(driver, app_name)
+    to_excel(get_keys_of_first_app(driver), username)
+
+    driver.close()
+    print(type(elem))
 
 
 def to_excel(credential_list, username):
     df = pd.read_excel(access_keys_excel, sheet_name = "Sheet1")
-    
+
     try:
         df_index = int(df[df.username == username].index.to_native_types()[0])
         df.loc[df_index, 'consumer_key'] = credential_list[0]
         df.loc[df_index, 'consumer_secret'] = credential_list[1]
         df.loc[df_index, 'access_token'] = credential_list[2]
         df.loc[df_index, 'access_token_secret'] = credential_list[3]
-      
+
     except IndexError:
         df = df.append(pd.DataFrame([[username] + credential_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
-        
+
     df.to_excel(access_keys_excel)
     print(df)
 
@@ -183,15 +193,16 @@ def delete_first_app(driver, username):
         print("Error: No app found, or error in excel deletion.")
 
     # driver.close()
-def delete_from_excel(username):    
+def delete_from_excel(username):
     df = pd.read_excel(access_keys_excel, sheet_name = "Sheet1")
     df = df[df.username != username]
     df.to_excel(access_keys_excel)
 
 
-#login_to_twitter(driver, username, password)
+# login_to_twitter(driver, username, password)
 # delete_first_app(driver, username)
 # create_app(driver, app_name = 'trial___1')
 #to_excel(get_keys_of_first_app(driver), username)
 # print(get_keys_of_first_app(driver))
 #delete_from_excel(username)
+# create_or_get_keys(driver, app_name = "trail___1")
