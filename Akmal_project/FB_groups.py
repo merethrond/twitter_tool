@@ -10,14 +10,14 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 
-username = "xxxxxxxxxxxxxxx"
-Password = "xxxxxxxxxxxxxxx"
+username = "alamgirakmal@yahoo.com"
+Password = "desperateforsolace"
 account = ("https://en-gb.facebook.com/login/")
 
 chrome_options = webdriver.ChromeOptions()
 prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
-driver = webdriver.Chrome(r'C:\Users\Admin\Desktop\chromedriver.exe', chrome_options=chrome_options)
+driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
 driver.get(account)
 # (?# driver.get(r'C:\Users\Admin\Desktop\modi.html'))
 time.sleep(3)
