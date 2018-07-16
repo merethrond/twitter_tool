@@ -209,11 +209,12 @@ login()
 following_list = follower_extraction()
 profile_opener(following_list)
 unable_to_access()
+'''
 # _9AhH0 - fist image of profile class ClassName(object):
 	"""docstring for ClassName"""
-	def __init__(self, arg):
-		super(ClassName, self).__init__()
-		self.arg = arg
+	# def __init__(self, arg):
+	# 	super(ClassName, self).__init__()
+	# 	self.arg = arg
 		
 # fr66n - span class in feed/image of profile for heart
 # for i in following_list:
@@ -259,3 +260,4 @@ unable_to_access()
 # 	for x in range(0,len(like)):
 # 		if like[x].is_displayed():
 # 			like[x].click()
+'''
