@@ -17,3 +17,8 @@ for username in access_code.username:
     api_dict[username] = api
 
 #print(api_dict)
+def follow_each_other(access_code, api_dict):
+    for current_username in api_dict.keys():
+        for other_username in access_code[access_code.username != current_username]['username']:
+            api_dict[current_username].create_friendship(api_dict[other_username].me().screen_name)
+            print(current_username, " follows ", other_username)
