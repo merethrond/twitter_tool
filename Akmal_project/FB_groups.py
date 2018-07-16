@@ -9,9 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 import time
 from selenium.webdriver.common.action_chains import ActionChains
+from fb_credentials import username,Password
 
-username = "alamgirakmal@yahoo.com"
-Password = "desperateforsolace"
 account = ("https://en-gb.facebook.com/login/")
 
 chrome_options = webdriver.ChromeOptions()
@@ -40,29 +39,49 @@ time.sleep(5)
 
 
 
-finds_children = []
-finds = driver.find_elements_by_css_selector("._52eh._5bcu")
-print(len(finds))
+# finds_children = []
+# finds = driver.find_elements_by_css_selector("._52eh._5bcu")
+# print(len(finds))
+# fol_list = driver.find_elements_by_xpath("//div[@role='dialog']//li//a")
+# href = img_div.get_attribute('href')
+# 	print(href)
+href_list = []
+
+# driver.findElement(By.partialLinkText("here")).click();	
+finds = driver.find_elements_by_xpath('//div[@class="_ajw"]')
 for i in finds:
-	try:	
-		# i.click()
-		driver.execute_script("arguments[0].click();", i)
-		print('clicked')
-		time.sleep(6)
-		print(group_url)
-		print(driver.current_url)
-		driver.get(group_url)
-	except:
-		print('could not click')
-		pass	
-# for child in finds:
+	# href = i.find_element_by_xpath('//div//div//a')
+	href = i.find_elements_by_xpath(".//a")
+	# href_list.append(href.get_attribute('href'))
+	for i in href:
+		print('\n####',i.text)
+		print('#href',i.get_attribute('href'),'#')
+		href_list.append(i.get_attribute('href'))
+
+print(href_list)
+for i in href_list:
+	driver.get(i)
+	time.sleep(6)
+# 	
+# try:	
+# 		# i.click()
+# 		time.sleep(4)
+# 		driver.execute_script("arguments[0].click();", i)
+# 		print('clicked')
+# 		time.sleep(4)
+# 		print(driver.current_url)
+# 		print(group_url)
+# 		driver.get(group_url)
+# 	except:
+# 		print('could not click')
+# 		pass	
+# # for child in finds:
 # 	finds_children.append(child.find_element_by_tag_name('a'))
 # for i in finds_children:
 # 	print(i)
 # 	print(i.text)
 # 	i.click()
 	
-# finds = driver.find_elements_by_xpath('//div[@class="_52eh"]//a')
 
 # finds = driver.find_element_by_xpath('//div[contains(text(), "Aam Aadmi Party")]')
 # counter = 0
