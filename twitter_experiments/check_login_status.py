@@ -10,6 +10,7 @@ def login(driver, username, password):
     driver.get('https://apps.twitter.com/')
     signIn = driver.find_element_by_xpath('//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]');
     signIn.click()
+    print("Username:", username)
     print("Twitter app opened")
 
     email = driver.switch_to_active_element()#Maybe we will select element instead of this.

@@ -1,56 +1,12 @@
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
-import os
 import time
-
-# from excelReader import credentials
 from vault import user_keys_excel
-
-
+#
 from bs4 import BeautifulSoup
-
-# Abhishek
-# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-# DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
-# driver = webdriver.Chrome(executable_path = DRIVER_BIN)
-
-#Akmal
-#chrome_options = webdriver.ChromeOptions()
-#prefs = {"profile.default_content_setting_values.notifications" : 2}
-#chrome_options.add_experimental_option("prefs",prefs)
-#driver = webdriver.Chrome(r'C:\Users\Admin\Desktop\chromedriver.exe', chrome_options=chrome_options)
-
-#Ayush
-#chrome_options = webdriver.ChromeOptions()
-#prefs = {"profile.default_content_setting_values.notifications" : 2}
-#chrome_options.add_experimental_option("prefs",prefs)
-#driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
+# from check_login_status import login
 
 
-# twitter login process
-def login_to_twitter(driver, username, password):
-    account = 'https://apps.twitter.com/'
-    driver.get(account)
-    signIn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,'//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]')))
-    # signIn = driver.find_element_by_xpath('//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]');
-    signIn.click()
-    print("Username:", username)
-    print("Twitter app opened")
-    time.sleep(2)
-    email = driver.switch_to_active_element()
-    email.send_keys(username)
-    email.send_keys(Keys.TAB)
-    print("email entered")
-
-    time.sleep(1)
-    password_field = driver.switch_to_active_element()
-    password_field.send_keys(password)
-    password_field.send_keys(Keys.RETURN)
-    print("password entered")
-
-    time.sleep(1)
-    print("Logged in")
 #Get the access tokens of the already created apps.
 def get_keys_of_first_app(driver):
     driver.get('https://apps.twitter.com/')
@@ -58,8 +14,6 @@ def get_keys_of_first_app(driver):
     elem.click()
     driver.get(driver.current_url[:-4] + "keys")
     page = (driver.page_source)
-    #comment out the line below in case you want to leave the browser open after calling this function.
-    # driver.close()
 
     tokenSoup = BeautifulSoup(page,"html.parser")#,"lxml")
     consumer_tokens = tokenSoup.select(".app-settings > .row > span")
@@ -82,9 +36,9 @@ def get_keys_of_first_app(driver):
     access_token_secret = access_tokens[3].string
     print("access_token:", access_token, "access_token_secret:", access_token_secret, sep = '\n')
 
-    credential_list = [consumer_key,consumer_secret,access_token,access_token_secret]
+    user_key_list = [consumer_key,consumer_secret,access_token,access_token_secret]
 
-    return credential_list
+    return user_key_list
 
 
 def create_app(driver, app_name):
@@ -129,7 +83,6 @@ def create_app(driver, app_name):
     link.send_keys(Keys.TAB)
     time.sleep(1)
 
-
     Create = driver.switch_to_active_element()
     Create.send_keys(Keys.RETURN)
 
@@ -139,29 +92,29 @@ def create_or_get_keys(driver, app_name, username):
         elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
     except:
         create_app(driver, app_name)
-    to_excel(get_keys_of_first_app(driver), username)
+    try:
+        to_excel(get_keys_of_first_app(driver), username)
+    except Exception as e:
+        print("ERROR:",e,"in getting app credentials for", username)
 
     driver.close()
-    # print(type(elem))
 
 
-def to_excel(credential_list, username):
-    df = pd.read_excel(access_keys_excel, sheet_name = "Sheet1")
+def to_excel(user_key_list, username):
+    df = pd.read_excel(user_keys_excel, sheet_name = "Sheet1")
 
     try:
         df_index = int(df[df.username == username].index.to_native_types()[0])
-        df.loc[df_index, 'consumer_key'] = credential_list[0]
-        df.loc[df_index, 'consumer_secret'] = credential_list[1]
-        df.loc[df_index, 'access_token'] = credential_list[2]
-        df.loc[df_index, 'access_token_secret'] = credential_list[3]
+        df.loc[df_index, 'consumer_key'] = user_key_list[0]
+        df.loc[df_index, 'consumer_secret'] = user_key_list[1]
+        df.loc[df_index, 'access_token'] = user_key_list[2]
+        df.loc[df_index, 'access_token_secret'] = user_key_list[3]
 
     except IndexError:
-        df = df.append(pd.DataFrame([[username] + credential_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
+        df = df.append(pd.DataFrame([[username] + user_key_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
 
-    df.to_excel(access_keys_excel)
+    df.to_excel(user_keys_excel)
     print(df)
-
-
 
 def delete_first_app(driver, username):
     driver.get('https://apps.twitter.com/')
@@ -176,22 +129,19 @@ def delete_first_app(driver, username):
         print("App deleted")
         #Removing the username entry from the excel file.
         #This will remove multiple entries as well.
-        df = pd.read_excel(access_keys_excel, sheet_name = "Sheet1")
+        df = pd.read_excel(user_keys_excel, sheet_name = "Sheet1")
         df = df[df.username != username]
-        df.to_excel(access_keys_excel)
-
-
+        df.to_excel(user_keys_excel)
     except:
         print("Error: No app found, or error in excel deletion.")
 
-    # driver.close()
 def delete_from_excel(username):
-    df = pd.read_excel(access_keys_excel, sheet_name = "Sheet1")
+    df = pd.read_excel(user_keys_excel, sheet_name = "Sheet1")
     df = df[df.username != username]
-    df.to_excel(access_keys_excel)
+    df.to_excel(user_keys_excel)
 
-
-# login_to_twitter(driver, username, password)
+#driver - webdriver.Chrome(executable_path = path)
+# login(driver, username, password)
 # delete_first_app(driver, username)
 # create_app(driver, app_name = 'trial___1')
 #to_excel(get_keys_of_first_app(driver), username)

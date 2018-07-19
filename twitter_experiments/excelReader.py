@@ -10,5 +10,4 @@ def convert_to_dictionary():
 credentials = convert_to_dictionary()
 #Excluding this email because of phone verification requirement upon app creation.
 
-
-print(len(credentials))
+# print(len(credentials))
