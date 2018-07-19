@@ -41,7 +41,8 @@ def login_to_twitter(driver, username, password):
 
     account = 'https://apps.twitter.com/'
     driver.get(account)
-    signIn = driver.find_element_by_xpath('//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]');
+    signIn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,'//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]')))
+    # signIn = driver.find_element_by_xpath('//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]');
     signIn.click()
     print("Username:", username)
     print("Twitter app opened")
@@ -52,9 +53,9 @@ def login_to_twitter(driver, username, password):
     print("email entered")
 
     time.sleep(1)
-    email = driver.switch_to_active_element()
-    email.send_keys(password)
-    email.send_keys(Keys.RETURN)
+    password_field = driver.switch_to_active_element()
+    password_field.send_keys(password)
+    password_field.send_keys(Keys.RETURN)
     print("password entered")
 
     time.sleep(1)
