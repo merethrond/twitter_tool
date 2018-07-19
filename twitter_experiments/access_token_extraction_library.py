@@ -93,7 +93,7 @@ def create_or_get_keys(driver, app_name, username, login_excel, user_keys_excel)
     except:
         create_app(driver, app_name)
     try:
-        to_excel(get_keys_of_first_app(driver), username, user_keys_excel)
+        put_to_excel(get_keys_of_first_app(driver), username, user_keys_excel)
     except Exception as e:
         print("ERROR:",e,"in getting app credentials for", username)
         df = pd.read_excel(login_excel)
@@ -104,7 +104,7 @@ def create_or_get_keys(driver, app_name, username, login_excel, user_keys_excel)
     driver.close()
 
 
-def to_excel(user_key_list, username, user_keys_excel):
+def put_to_excel(user_key_list, username, user_keys_excel):
     df = pd.read_excel(user_keys_excel, sheet_name = "Sheet1")
     try:
         df_index = int(df[df.username == username].index.to_native_types()[0])
@@ -147,7 +147,7 @@ def delete_from_excel(username):
 # login(driver, username, password)
 # delete_first_app(driver, username)
 # create_app(driver, app_name = 'trial___1')
-#to_excel(get_keys_of_first_app(driver), username, user_keys_excel)
+#put_to_excel(get_keys_of_first_app(driver), username, user_keys_excel)
 # print(get_keys_of_first_app(driver))
 #delete_from_excel(username)
 # create_or_get_keys(driver, app_name = "trail___1", login_excel = login_excel)
