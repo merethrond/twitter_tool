@@ -86,23 +86,26 @@ def create_app(driver, app_name):
     Create = driver.switch_to_active_element()
     Create.send_keys(Keys.RETURN)
 
-def create_or_get_keys(driver, app_name, username):
+def create_or_get_keys(driver, app_name, username, login_excel, user_keys_excel):
     driver.get('https://apps.twitter.com/')
     try:
         elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
     except:
         create_app(driver, app_name)
     try:
-        to_excel(get_keys_of_first_app(driver), username)
+        to_excel(get_keys_of_first_app(driver), username, user_keys_excel)
     except Exception as e:
         print("ERROR:",e,"in getting app credentials for", username)
-
+        df = pd.read_excel(login_excel)
+        df_index = int(df[df.username == username].index.to_native_types()[0])
+        print(df_index)
+        df.loc[df_index]['issues'] = 'phone verify'
+        df.to_excel(login_excel)
     driver.close()
 
 
-def to_excel(user_key_list, username):
+def to_excel(user_key_list, username, user_keys_excel):
     df = pd.read_excel(user_keys_excel, sheet_name = "Sheet1")
-
     try:
         df_index = int(df[df.username == username].index.to_native_types()[0])
         df.loc[df_index, 'consumer_key'] = user_key_list[0]
@@ -144,7 +147,7 @@ def delete_from_excel(username):
 # login(driver, username, password)
 # delete_first_app(driver, username)
 # create_app(driver, app_name = 'trial___1')
-#to_excel(get_keys_of_first_app(driver), username)
+#to_excel(get_keys_of_first_app(driver), username, user_keys_excel)
 # print(get_keys_of_first_app(driver))
 #delete_from_excel(username)
-# create_or_get_keys(driver, app_name = "trail___1")
+# create_or_get_keys(driver, app_name = "trail___1", login_excel = login_excel)
