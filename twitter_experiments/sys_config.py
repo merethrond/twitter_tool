@@ -9,11 +9,9 @@ def mac_abhishek():
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
     path = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
     return path
-	# mac_config = DRIVER_BIN
 
 def pc_ayush():
 	path = 'C:\\testDir\\chromedriver_win32\\chromedriver.exe'
 	return path
 
-# driver = webdriver.Chrome(r'C:\testDir\chromedriver_win32\chromedriver.exe', chrome_options=chrome_options)
 path = mac_abhishek()
