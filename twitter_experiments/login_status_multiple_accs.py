@@ -3,8 +3,8 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 import pandas as pd
-file_name = "email_credentials.xlsx"
-excel_data = pd.read_excel(file_name)
+from vault import login_excel
+excel_data = pd.read_excel(email_excel)
 '''
 Use this in case of windows.
 '''
@@ -45,7 +45,7 @@ for username, password in zip(excel_data.username, excel_data.password):
    print("Twitter app opened")
 
    email = driver.switch_to_active_element()
-   time.sleep(1)
+   time.sleep(3)
 	# email = driver.find_element_by_class_name("swift-loading no-nav-banners")
    email.send_keys(username)
    email.send_keys(Keys.TAB)
@@ -73,5 +73,5 @@ for username, password in zip(excel_data.username, excel_data.password):
 #
 excel_data['issues'] = issues
 print(issues)
-excel_data.to_excel(file_name)
+excel_data.to_excel(email_excel)
 print(excel_data)

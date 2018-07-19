@@ -26,4 +26,11 @@ def follow_each_other(access_code, api_dict):
             except:
                 print(current_username, " already follows ", other_username)
 
+
+#update status
+
+#retweet
+
+
+
 follow_each_other(access_code, api_dict)

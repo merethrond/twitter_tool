@@ -1,5 +1,5 @@
 import pandas as pd
-from key_file_vault import email_excel
+from vault import login_excel
 
 
 excel_data = pd.read_excel(email_excel)  # Opening the file
@@ -10,4 +10,5 @@ def convert_to_dictionary():
 credentials = convert_to_dictionary()
 #Excluding this email because of phone verification requirement upon app creation.
 
-# print(credentials)
+
+print(len(credentials))
