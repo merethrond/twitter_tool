@@ -9,12 +9,12 @@ import os
 import time
 from pandas import read_excel
 from selenium import webdriver
-from key_file_vault import access_keys_excel
+from vault import login_excel
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DRIVER_BIN = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
 
 from access_token_extraction_library import login_to_twitter, get_keys_of_first_app,\
-create_app, to_excel, delete_first_app
+create_app, to_excel, delete_first_app, create_or_get_keys
 
 from excelReader import credentials
 
@@ -23,9 +23,8 @@ def create_apps_save_keys():
     for username in credentials.keys():
         driver = webdriver.Chrome(executable_path = DRIVER_BIN)
         login_to_twitter(driver, username, credentials[username])
-        create_app(driver, "trial__" + str(app_name_index))
-        to_excel(get_keys_of_first_app(driver), username)
-        driver.close()
+        create_or_get_keys(driver, "trial__" + str(app_name_index), username)
+        # driver.close()
         app_name_index += 1
 def delete_multiple_apps():
     for username in credentials.keys():
@@ -45,6 +44,7 @@ def login_and_wait():
     Note: Login is done on only those credentials whose access details are there.
     """
     df = read_excel(access_keys_excel)
+    # for username in credentials.keys():
     for username in df.username:
         driver = webdriver.Chrome(executable_path = DRIVER_BIN)
         login_to_twitter(driver, username, credentials[username])

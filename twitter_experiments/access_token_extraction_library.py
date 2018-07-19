@@ -5,7 +5,7 @@ import os
 import time
 
 # from excelReader import credentials
-# from key_file_vault import username, password
+from vault import user_keys_excel
 
 
 from bs4 import BeautifulSoup
@@ -30,15 +30,6 @@ from bs4 import BeautifulSoup
 
 # twitter login process
 def login_to_twitter(driver, username, password):
-    # driver.get('https://twitter.com/login')
-    # print(driver.title)
-    # elem = driver.switch_to_active_element()
-    # elem.send_keys(username)
-    # elem.send_keys(Keys.TAB)
-    # elem = driver.switch_to_active_element()
-    # elem.send_keys(password)
-    # elem.send_keys(Keys.RETURN)
-
     account = 'https://apps.twitter.com/'
     driver.get(account)
     signIn = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,'//a[@href="https://twitter.com/login?redirect_after_login=https%3A//apps.twitter.com/"]')))
@@ -142,7 +133,7 @@ def create_app(driver, app_name):
     Create = driver.switch_to_active_element()
     Create.send_keys(Keys.RETURN)
 
-def create_or_get_keys(driver, app_name):
+def create_or_get_keys(driver, app_name, username):
     driver.get('https://apps.twitter.com/')
     try:
         elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
@@ -151,7 +142,7 @@ def create_or_get_keys(driver, app_name):
     to_excel(get_keys_of_first_app(driver), username)
 
     driver.close()
-    print(type(elem))
+    # print(type(elem))
 
 
 def to_excel(credential_list, username):
