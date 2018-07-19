@@ -1,7 +1,7 @@
 .DS_Store
 excel_files/
 email_credentials.xlsx
-key_file_vault.py
+vault.py
 .ipynb_checkpoints/
 __pycache__/
 filename.xlsx
