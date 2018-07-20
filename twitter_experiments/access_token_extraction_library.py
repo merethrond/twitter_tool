@@ -117,7 +117,7 @@ def put_to_excel(user_key_list, username, user_keys_excel):
         print(df)
     except IndexError:
         df = df.append(pd.DataFrame([[username] + user_key_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
-        print(df,"INDEX ERROR")
+        print(df,"[INDEX ERROR] username not found, appending in excel. ")
     except Exception as e:
         print('ERROR:',e)
     try:

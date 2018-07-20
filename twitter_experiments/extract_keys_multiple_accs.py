@@ -20,7 +20,10 @@ def create_apps_save_keys():
     app_name_index = 0
     for username in credential_dict.keys():
         driver = webdriver.Chrome(executable_path = path)
-        login(driver, username, credential_dict[username])
+        while(True):
+            if(login(driver, username, credential_dict[username])):
+                break
+        
         create_or_get_keys(driver, "trial__" + str(app_name_index), username, login_excel, user_keys_excel)
         app_name_index += 1
 
@@ -30,7 +33,10 @@ def delete_multiple_apps():
     # for username in credential_dict.keys():
         driver = webdriver.Chrome(executable_path = path)
         try:
-            login(driver, username, credential_dict[username])
+            while(True):
+                if(login(driver, username, credential_dict[username])):
+                    break
+            # login(driver, username, credential_dict[username])
             delete_first_app(driver, username)
         except:
             print("not found")

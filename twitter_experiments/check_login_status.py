@@ -14,11 +14,11 @@ def login(driver, username, password):
     print("Twitter app opened")
 
     email = driver.switch_to_active_element()#Maybe we will select element instead of this.
-    print(email.text)
-    if(email.text == username):
-      print('entered correctly')
-    else:
-      print('incorrectly entered')  
+    # print(email.get_attribute('value'))
+    # if(email.text == username):
+    #   print('entered correctly')
+    # else:
+    #   print('incorrectly entered')  
     time.sleep(3)
     email.send_keys(username)
     email.send_keys(Keys.TAB)
@@ -46,7 +46,11 @@ def read_login_credentials():
             issues.append("active")
             print("Logged in")
         else:
-            issues.append("not active")
+            if (login(driver, username, password)):
+              issues.append("active")
+              print("Logged in")
+            else:
+              issues.append("not active")
         driver.close()
     excel_data['issues'] = issues
     excel_data.to_excel(login_excel)
