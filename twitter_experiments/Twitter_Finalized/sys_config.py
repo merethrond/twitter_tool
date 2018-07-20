@@ -18,4 +18,4 @@ def pc_akmal():
 	path = "C:\\Users\\Admin\\Desktop\\chromedriver.exe"
 	return path
 
-path = pc_akmal()
+path = pc_ayush()
