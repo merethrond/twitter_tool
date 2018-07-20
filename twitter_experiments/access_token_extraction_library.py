@@ -37,7 +37,7 @@ def get_keys_of_first_app(driver):
     print("access_token:", access_token, "access_token_secret:", access_token_secret, sep = '\n')
 
     user_key_list = [consumer_key,consumer_secret,access_token,access_token_secret]
-
+    print('USER KEY LIST:',user_key_list)
     return user_key_list
 
 
@@ -94,30 +94,37 @@ def create_or_get_keys(driver, app_name, username, login_excel, user_keys_excel)
         create_app(driver, app_name)
     try:
         put_to_excel(get_keys_of_first_app(driver), username, user_keys_excel)
+    
     except Exception as e:
         print("ERROR:",e,"in getting app credentials for", username)
-        df = pd.read_excel(login_excel)
-        df_index = int(df[df.username == username].index.to_native_types()[0])
-        print(df_index)
-        df.loc[df_index]['issues'] = 'phone verify'
-        df.to_excel(login_excel)
+        # df = pd.read_excel(login_excel)
+        # df_index = int(df[df.username == username].index.to_native_types()[0])
+        # print(df_index)
+        # df.loc[df_index]['issues'] = 'phone verify'
+        # df.to_excel(login_excel)
     driver.close()
 
 
 def put_to_excel(user_key_list, username, user_keys_excel):
     df = pd.read_excel(user_keys_excel, sheet_name = "Sheet1")
+    print(df)
     try:
         df_index = int(df[df.username == username].index.to_native_types()[0])
         df.loc[df_index, 'consumer_key'] = user_key_list[0]
         df.loc[df_index, 'consumer_secret'] = user_key_list[1]
         df.loc[df_index, 'access_token'] = user_key_list[2]
         df.loc[df_index, 'access_token_secret'] = user_key_list[3]
-
+        print(df)
     except IndexError:
         df = df.append(pd.DataFrame([[username] + user_key_list], columns=['username','consumer_key','consumer_secret','access_token','access_token_secret']),ignore_index=True)
-
-    df.to_excel(user_keys_excel)
-    print(df)
+        print(df,"INDEX ERROR")
+    except Exception as e:
+        print('ERROR:',e)
+    try:
+        df.to_excel(user_keys_excel)
+        print(df)
+    except:
+        print('ERROR IN TO EXCEL')
 
 def delete_first_app(driver, username):
     driver.get('https://apps.twitter.com/')

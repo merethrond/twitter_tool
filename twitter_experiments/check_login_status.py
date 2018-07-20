@@ -14,6 +14,11 @@ def login(driver, username, password):
     print("Twitter app opened")
 
     email = driver.switch_to_active_element()#Maybe we will select element instead of this.
+    print(email.text)
+    if(email.text == username):
+      print('entered correctly')
+    else:
+      print('incorrectly entered')  
     time.sleep(3)
     email.send_keys(username)
     email.send_keys(Keys.TAB)
@@ -26,13 +31,17 @@ def login(driver, username, password):
     print("password entered")
 
     time.sleep(2)
+    print(driver.current_url)
+    if(driver.current_url != 'https://apps.twitter.com/'):
+      return False
+    return True
 
 def read_login_credentials():
     issues = []
     for username, password in zip(excel_data.username, excel_data.password):
         driver = webdriver.Chrome(executable_path = path)
-        login(driver, username, password)
-        if driver.current_url == 'https://apps.twitter.com/':
+        
+        if (login(driver, username, password)):
             # Will check through app creation later.
             issues.append("active")
             print("Logged in")

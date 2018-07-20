@@ -14,4 +14,4 @@ def pc_ayush():
 	path = 'C:\\testDir\\chromedriver_win32\\chromedriver.exe'
 	return path
 
-path = mac_abhishek()
+path = pc_ayush()
