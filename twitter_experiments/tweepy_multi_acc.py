@@ -49,6 +49,13 @@ def update_status():
 
 #update status & #retweet
 def tweet_retweet(tweet_text = 'I am a sample tweet'):
+    """
+    Args: tweet_text
+    This function tweets a particular tweet from multiple accounts
+    Then it retweet that tweet from other accounts.
+    Returns: None
+    """
+
     for current_username in api_dict.keys():
         print(current_username)
         tweet = api_dict[current_username].update_status(tweet_text)
