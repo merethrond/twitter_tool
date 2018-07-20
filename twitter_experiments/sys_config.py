@@ -14,4 +14,8 @@ def pc_ayush():
 	path = 'C:\\testDir\\chromedriver_win32\\chromedriver.exe'
 	return path
 
-path = pc_ayush()
+def pc_akmal():
+	path = "C:\\Users\\Admin\\Desktop\\chromedriver.exe"
+	return path
+
+path = pc_akmal()
