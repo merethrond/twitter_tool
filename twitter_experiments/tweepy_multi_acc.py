@@ -3,7 +3,12 @@ import pandas as pd
 from vault import user_keys_excel
 access_code = pd.read_excel(user_keys_excel)
 
-def api_dict_creation():
+def api_dict_creation(access_code):
+    ''' 
+    args: access_code
+    Api Dictionary creation from excel file
+    return : api_dict
+    '''
     api_dict = {}
     for username in access_code.username:
         row = access_code[access_code.username == username]
@@ -18,7 +23,13 @@ def api_dict_creation():
         api_dict[username] = api
     return api_dict 
 #print(api_dict)
+
 def follow_each_other(access_code, api_dict):
+    '''
+    args : access_code, api_dict
+    Follows the account by picking up the all the username from the dictionary except the current username
+    Return : None
+    '''
     for current_username in api_dict.keys():
         for other_username in access_code[access_code.username != current_username]['username']:
             try:
@@ -29,9 +40,10 @@ def follow_each_other(access_code, api_dict):
 
 def create_tweet_file():
     '''
-    READ API EXCEL, COPY USER COLUMN AND WRITE TO NEW TWEET EXCEL FILE
-
-    USE THIS TWEET FILE, WRITE TWEETS IN NEW COLUMN CALLED TWEETS,
+    args : api_dict, 
+    read api excel, copy user column and write to new tweet excel file
+    use this tweet file, write tweets in new column called tweets,
+    Return : None
     '''
     writer = pd.ExcelWriter("user_tweets.xlsx")
     df = pd.DataFrame()
@@ -40,7 +52,12 @@ def create_tweet_file():
     df.to_excel("user_tweets.xlsx")
 
 #update status
-def update_status():
+def update_status_from_excel():
+    '''
+args : api_dict, 
+Opens the excel file, picks up the tweets and tweets for the current username
+Return : None
+    '''
     df = pd.read_excel('excel_files/user_tweets.xlsx')
     for current_username in df.username:
         print(current_username)
@@ -49,13 +66,12 @@ def update_status():
 
 #update status & #retweet
 def tweet_retweet(tweet_text = 'I am a sample tweet'):
-    """
+    '''
     Args: tweet_text
     This function tweets a particular tweet from multiple accounts
     Then it retweet that tweet from other accounts.
     Returns: None
-    """
-
+    '''
     for current_username in api_dict.keys():
         print(current_username)
         tweet = api_dict[current_username].update_status(tweet_text)
