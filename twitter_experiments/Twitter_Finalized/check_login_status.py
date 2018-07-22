@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.INFO)
 # logging.getLogger().setLevel(logging.DEBUG)
 logger = logging.getLogger(__name__)
 # logger.setLevel(level)
+# logger.propagate = False
 ### LOGGING ####
 
 excel_data = pd.read_excel(login_excel)
@@ -22,7 +23,7 @@ def login(driver, username, password):
     try:
         driver.get('https://apps.twitter.com/')
     except:
-        logger.error("NOT CONNECTED TO THE INTERNET!")
+        logger.error("NOT CONNECTED TO THE INTERNET!") ###NEEDS IMPROVEMENT
         return '404'
     # print("Opening twitter")
     logger.info('apps.twitter.com opened')
