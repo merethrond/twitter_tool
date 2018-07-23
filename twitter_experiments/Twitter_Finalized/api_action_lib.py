@@ -1,17 +1,17 @@
 import tweepy
 import pandas as pd
 from file_path import user_keys_excel,user_tweets_excel
-access_code = pd.read_excel(user_keys_excel)
+user_keys_dataframe = pd.read_excel(user_keys_excel)
 
-def api_dict_creation(access_code):
+def api_dict_creation(user_keys_dataframe):
     '''
-    args: access_code
+    args: user_keys_dataframe
     Api Dictionary creation from excel file
     return : api_dict
     '''
     api_dict = {}
-    for username in access_code.username:
-        row = access_code[access_code.username == username]
+    for username in user_keys_dataframe.username:
+        row = user_keys_dataframe[user_keys_dataframe.username == username]
         consumer_key = row.consumer_key.tolist()[0]
         consumer_secret = row.consumer_secret.tolist()[0]
         access_token = row.access_token.tolist()[0]
@@ -23,11 +23,11 @@ def api_dict_creation(access_code):
         api_dict[username] = api
     return api_dict
 #print(api_dict)
-api_dict = api_dict_creation(access_code) ## NEEDS IMPROVEMENT
+api_dict = api_dict_creation(user_keys_dataframe) ## NEEDS IMPROVEMENT
 
-def follow_each_other(access_code, api_dict):
+def follow_each_other(user_keys_dataframe, api_dict):
     '''
-    args : access_code, api_dict
+    args : user_keys_dataframe, api_dict
     Follows the account by picking up the all the username from the dictionary except the current username
     Return : None
     '''
@@ -35,14 +35,14 @@ def follow_each_other(access_code, api_dict):
         ## POSSIBLE TO USE api_dict here as well?
         # for other_username in api_dict.keys():
         # if other_username != current_username
-        for other_username in access_code[access_code.username != current_username]['username']:
+        for other_username in user_keys_dataframe[user_keys_dataframe.username != current_username]['username']:
             try:
                 api_dict[current_username].create_friendship(api_dict[other_username].me().screen_name)
                 print(current_username, " follows ", other_username)
             except:
                 print(current_username, " already follows ", other_username)
 
-def create_tweet_file():
+def create_tweet_file(user_keys_dataframe): #### use when tweet file empty
     '''
     args : api_dict,
     read api excel, copy user column and write to new tweet excel file
@@ -51,12 +51,12 @@ def create_tweet_file():
     '''
     # writer = pd.ExcelWriter("excel_files/user_tweets.xlsx") < DISABLING THIS
     df = pd.DataFrame()
-    for username in access_code.username:
-        df["username"] = access_code.username
-        df['tweet'] = access_code.username
-        # df.to_excel("excel_files/user_tweets.xlsx")
+    for username in user_keys_dataframe.username:
+        df["username"] = user_keys_dataframe.username
+        df['tweet'] = ""
+        df.to_excel("excel_files/user_tweets.xlsx")
     print(df)
-    df.to_excel(user_tweets_excel) # < MADE THIS WORK
+    # df.to_excel(user_tweets_excel) # < MADE THIS WORK
 
 user_tweets = pd.read_excel(user_tweets_excel)
 
@@ -73,11 +73,9 @@ def update_status_from_excel():
 args : api_dict,
 Opens the excel file, picks up the tweets and tweets for the current username
 Return : None
-
 # read_login_credentials()
     '''
     tweet_dict = tweet_to_dictionary()
-
     for user in tweet_dict.keys():
         print("User",user,'tweeting from excel')
         # try:
@@ -109,13 +107,17 @@ def tweet_retweet(tweet_text = 'I am a sample tweet'):
         print(current_username)
         tweet = api_dict[current_username].update_status(tweet_text)
         print(tweet.text)
-        for other_username in access_code[access_code.username != current_username]['username']:
+        '''
+        for other_username in api_dict.keys():
+            if(other_username != current_username):
+        '''
+        for other_username in user_keys_dataframe[user_keys_dataframe.username != current_username]['username']:
             try:
                 api_dict[other_username].retweet(tweet.id)
+                api_dict[other_username].create_favorite(tweet.id)
                 print(other_username, " Retweets ", current_username , "Tweet text:", tweet.text)
             except Exception as e:
                 print('ERROR:',e,'from id',other_username,'on retweeting',tweet.text)
-
 
 
 # def un_tweet_retweet(tweet_text = 'I am a sample tweet'):
@@ -131,7 +133,7 @@ def tweet_retweet(tweet_text = 'I am a sample tweet'):
 #         print(current_username)
 #         # tweet = api_dict[current_username].update_status(tweet_text)
 #         # print(tweet.text)
-#         for other_username in access_code[access_code.username != current_username]['username']:
+#         for other_username in user_keys_dataframe[user_keys_dataframe.username != current_username]['username']:
 #             try:
 #                 # api_dict[other_username].unretweet(tweet.id)
 #                 print(other_username, " Retweets ", current_username , "Tweet text:", tweet.text)
@@ -140,8 +142,29 @@ def tweet_retweet(tweet_text = 'I am a sample tweet'):
 
 # create_tweet_file()
 # update_status_from_excel()
+def update_same_status(tweet_text):
+    for current_username in api_dict.keys():
+        tweet = api_dict[current_username].update_status(tweet_text)
+        # if tweet_id_dict.get(current_username) is None:
+        #     tweet_id_dict[current_username] = []
+        # tweet_id_dict[current_username].append(tweet.id)
+    # #Storing the tweet ids now
+    # df = pd.read_excel(user_tweets_excel)
+    # for username in user_keys_dataframe.username:
+    #     df[username]["ID_list"] += tweet_id_dict[username]
+    # df.to_excel(user_tweets_excel)
+def destroy_top_status():
+    for current_username in api_dict.keys():
+        print(current_username)
+        for tweet in tweepy.Cursor(api_dict[current_username].user_timeline).items():
+            print(tweet.text)
+            api_dict[current_username].destroy_status(tweet.id)
 
-# follow_each_other(access_code, api_dict)
-# tweet_retweet("Integrity Maintained?")
 
+# follow_each_other(user_keys_dataframe, api_dict)
+# tweet_retweet("AAP REPORT:https://www.hindustantimes.com/delhi-news/aap-completes-3-years-in-delhi-a-look-at-kejriwal-govt-s-achievements-failures/story-bDy16KdOYHbg17lkyGwOqK.html")
+# print(tweet_id_dict)
 # update_status_from_excel()
+# create_tweet_file(user_keys_dataframe)
+# update_same_status("Let's inspire ourselves!")
+# destroy_top_status()
