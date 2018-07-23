@@ -7,7 +7,7 @@ Created on Mon Jul  9 16:13:38 2018
 """
 import time
 from pandas import read_excel
-from vault import user_keys_excel, login_excel
+from file_path import user_keys_excel
 from sys_config import path, webdriver
 from single_acc_lib import delete_first_app, create_or_get_keys
 # from excelReader import credentials
@@ -24,7 +24,7 @@ def create_apps_save_keys():
             if(login(driver, username, credential_dict[username])):
                 break
         
-        create_or_get_keys(driver, "trial__" + str(app_name_index), username, login_excel, user_keys_excel)
+        create_or_get_keys(driver, "trial__" + str(app_name_index), username, user_keys_excel)
         app_name_index += 1
 
 def delete_multiple_apps():

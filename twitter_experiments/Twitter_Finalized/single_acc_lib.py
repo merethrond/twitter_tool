@@ -1,7 +1,7 @@
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
 import time
-from vault import user_keys_excel
+from file_path import user_keys_excel
 #
 from bs4 import BeautifulSoup
 # from check_login_status import login
@@ -86,7 +86,7 @@ def create_app(driver, app_name):
     Create = driver.switch_to_active_element()
     Create.send_keys(Keys.RETURN)
 
-def create_or_get_keys(driver, app_name, username, login_excel, user_keys_excel):
+def create_or_get_keys(driver, app_name, username, user_keys_excel):
     driver.get('https://apps.twitter.com/')
     try:
         elem = driver.find_element_by_css_selector("div.app-details > h2 > a")
@@ -97,11 +97,7 @@ def create_or_get_keys(driver, app_name, username, login_excel, user_keys_excel)
     
     except Exception as e:
         print("ERROR:",e,"in getting app credentials for", username)
-        # df = pd.read_excel(login_excel)
-        # df_index = int(df[df.username == username].index.to_native_types()[0])
-        # print(df_index)
-        # df.loc[df_index]['issues'] = 'phone verify'
-        # df.to_excel(login_excel)
+      ### PHONE VERIFY
     driver.close()
 
 
@@ -158,3 +154,10 @@ def delete_from_excel(username):
 # print(get_keys_of_first_app(driver))
 #delete_from_excel(username)
 # create_or_get_keys(driver, app_name = "trail___1", login_excel = login_excel)
+
+## PHONE VERIFY CODE
+  # df = pd.read_excel(login_excel)
+        # df_index = int(df[df.username == username].index.to_native_types()[0])
+        # print(df_index)
+        # df.loc[df_index]['issues'] = 'phone verify'
+        # df.to_excel(login_excel)}
