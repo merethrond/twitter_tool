@@ -7,19 +7,11 @@ chrome_options = webdriver.ChromeOptions()
 prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
 
-def mac_abhishek():
+def chromedriver_mac():
     import os.path
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(PROJECT_ROOT, "/Users/tuffy/Desktop/pr/Chromedriver")
+    path = os.path.join(PROJECT_ROOT, "chromedriver/Chromedriver")
     return path
-
-def chromedriver_path():
-	abs_dir_path = os.path.abspath(__file__) # absolute file path
-	req_path = abs_dir_path.rpartition('\\')
-	chrome_driver_path = req_path[0] + '\\chromedriver_win32\\chromedriver.exe'
-	return chrome_driver_path
-
-path = chromedriver_path()
 
 # def pc_ayush():
 # 	path = 'C:\\testDir\\chromedriver_win32\\chromedriver.exe'
@@ -34,3 +26,10 @@ path = chromedriver_path()
 # 	return path
 
 
+def chromedriver_win():
+	abs_dir_path = os.path.abspath(__file__) # absolute file path
+	req_path = abs_dir_path.rpartition('\\')
+	chrome_driver_path = req_path[0] + '\\chromedriver\\chromedriver.exe'
+	return chrome_driver_path
+
+path = chromedriver_mac()
