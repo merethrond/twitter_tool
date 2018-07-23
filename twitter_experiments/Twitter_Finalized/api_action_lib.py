@@ -1,6 +1,6 @@
 import tweepy
 import pandas as pd
-from vault import user_keys_excel,user_tweets_excel
+from file_path import user_keys_excel,user_tweets_excel
 access_code = pd.read_excel(user_keys_excel)
 
 def api_dict_creation(access_code):
