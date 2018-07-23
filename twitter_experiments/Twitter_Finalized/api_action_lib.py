@@ -4,7 +4,7 @@ from vault import user_keys_excel,user_tweets_excel
 access_code = pd.read_excel(user_keys_excel)
 
 def api_dict_creation(access_code):
-    ''' 
+    '''
     args: access_code
     Api Dictionary creation from excel file
     return : api_dict
@@ -21,7 +21,7 @@ def api_dict_creation(access_code):
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
         api_dict[username] = api
-    return api_dict 
+    return api_dict
 #print(api_dict)
 api_dict = api_dict_creation(access_code) ## NEEDS IMPROVEMENT
 
@@ -44,7 +44,7 @@ def follow_each_other(access_code, api_dict):
 
 def create_tweet_file():
     '''
-    args : api_dict, 
+    args : api_dict,
     read api excel, copy user column and write to new tweet excel file
     use this tweet file, write tweets in new column called tweets,
     Return : None
@@ -70,7 +70,7 @@ def tweet_to_dictionary():
 #update status
 def update_status_from_excel():
     '''
-args : api_dict, 
+args : api_dict,
 Opens the excel file, picks up the tweets and tweets for the current username
 Return : None
 
@@ -87,7 +87,7 @@ Return : None
         print(tweet.text)
         # except:
         #     print("STATUS IS DUPLICATE ERROR")
-        
+
 
     # for current_username in df.username:
     #     print(current_username)
