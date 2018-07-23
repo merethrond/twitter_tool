@@ -144,4 +144,4 @@ def tweet_retweet(tweet_text = 'I am a sample tweet'):
 # follow_each_other(access_code, api_dict)
 # tweet_retweet("Integrity Maintained?")
 
-update_status_from_excel()
+# update_status_from_excel()
