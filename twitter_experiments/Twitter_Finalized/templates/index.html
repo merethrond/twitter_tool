@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    Twitter tool
+{% endblock %}
+
+{% block body %}
+    <form action="{{ url_for('hello') }}" method="post">
+        <input type="number" name="tweet_id" placeholder="Enter tweet ID">
+        <input type="checkbox" name="retweet_check" >Retweet
+        <input type="checkbox" name="like_check" >Like
+        <button>Submit</button>
+    </form>
+{% endblock %}
