@@ -23,7 +23,7 @@ def create_apps_save_keys():
         while(True):
             if(login(driver, username, credential_dict[username])):
                 break
-        
+
         create_or_get_keys(driver, "trial__" + str(app_name_index), username, user_keys_excel)
         app_name_index += 1
 
@@ -56,6 +56,6 @@ def login_and_wait():
     time.sleep(30)
 # print(credential_dict)
 # delete_multiple_apps()
-create_apps_save_keys()
-# login_and_wait()
+# create_apps_save_keys()
+login_and_wait()
 # collect_keys_multiple_apps()

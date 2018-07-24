@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
-from api_action_lib import api_dict_creation, access_code
+from api_action_lib import api_dict_creation, user_keys_dataframe, update_same_status
 app = Flask(__name__)
 
-api_dict = api_dict_creation(access_code)
-username_list = list(access_code.username)
+api_dict = api_dict_creation(user_keys_dataframe)
+username_list = list(user_keys_dataframe.username)
 
 @app.route("/")
 def index():
@@ -17,3 +17,9 @@ def hello():
     print("Twitter ID is:", twitter_id)
     print(username_list)
     return render_template("hello.html", name=twitter_id)
+
+@app.route("/tweet", methods = ["POST"])
+def tweet_bomb():
+    tweet_text = request.form.get("tweet_text")
+    update_same_status(tweet_text, api_dict)
+    return "Tweeted"

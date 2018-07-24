@@ -142,7 +142,7 @@ def tweet_retweet(tweet_text = 'I am a sample tweet'):
 
 # create_tweet_file()
 # update_status_from_excel()
-def update_same_status(tweet_text):
+def update_same_status(tweet_text, api_dict):
     for current_username in api_dict.keys():
         tweet = api_dict[current_username].update_status(tweet_text)
         # if tweet_id_dict.get(current_username) is None:
@@ -166,5 +166,5 @@ def destroy_top_status():
 # print(tweet_id_dict)
 # update_status_from_excel()
 # create_tweet_file(user_keys_dataframe)
-# update_same_status("Let's inspire ourselves!")
+# update_same_status("Let's inspire ourselves!", api_dict)
 # destroy_top_status()
