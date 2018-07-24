@@ -96,7 +96,7 @@ Return : None
     #     print(tweet.text)
 
 #update status & #retweet
-def tweet_retweet(tweet_text = 'I am a sample tweet'):
+def tweet_retweet(tweet_text = 'I am a sample tweet', wait_interval = 0):
     '''
     Args: tweet_text
     This function tweets a particular tweet from multiple accounts
@@ -114,8 +114,9 @@ def tweet_retweet(tweet_text = 'I am a sample tweet'):
         for other_username in user_keys_dataframe[user_keys_dataframe.username != current_username]['username']:
             try:
                 api_dict[other_username].retweet(tweet.id)
-                api_dict[other_username].create_favorite(tweet.id)
+                # api_dict[other_username].create_favorite(tweet.id)
                 print(other_username, " Retweets ", current_username , "Tweet text:", tweet.text)
+                time.sleep(wait_interval)
             except Exception as e:
                 print('ERROR:',e,'from id',other_username,'on retweeting',tweet.text)
 
