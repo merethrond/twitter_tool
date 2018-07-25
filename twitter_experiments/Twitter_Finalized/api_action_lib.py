@@ -98,7 +98,7 @@ Return : None
     #     print(tweet.text)
 
 #update status & #retweet
-def tweet_retweet(api_dict, tweet_text = 'I am a sample tweet', wait_interval = 0):
+def tweet_retweet(tweet_text = 'I am a sample tweet', wait_interval = 0):
     '''
     Args: tweet_text
     This function tweets a particular tweet from multiple accounts
@@ -124,7 +124,7 @@ def tweet_retweet(api_dict, tweet_text = 'I am a sample tweet', wait_interval = 
             except Exception as e:
                 print('ERROR:',e,'from id',other_username,'on retweeting',tweet.text)
 
-def tweet_like(api_dict, tweet_text = 'I am a sample tweet', wait_interval = 0):
+def tweet_like(tweet_text = 'I am a sample tweet', wait_interval = 0):
     '''
     Args: tweet_text
     This function tweets a particular tweet from multiple accounts
@@ -173,7 +173,7 @@ def tweet_like(api_dict, tweet_text = 'I am a sample tweet', wait_interval = 0):
 
 # create_tweet_file()
 # update_status_from_excel()
-def update_same_status(api_dict, tweet_text, wait_interval = 0):
+def update_same_status(tweet_text, wait_interval = 0):
     for current_username in api_dict.keys():
         tweet = api_dict[current_username].update_status(tweet_text)
         print(f"{current_username}'s status is updated")
@@ -186,6 +186,7 @@ def destroy_top_status():
         for tweet in tweepy.Cursor(api_dict[current_username].user_timeline).items(1):
             print(tweet.text)
             api_dict[current_username].destroy_status(tweet.id)
+            print("status destroyed!")
 
 def like_top_status():
     for current_username in api_dict.keys():
@@ -199,21 +200,10 @@ def retweet_top_status():
         for tweet in tweepy.Cursor(api_dict[current_username].user_timeline).items(1):
             print(tweet.text)
             api_dict[current_username].retweet(tweet.id)
-def like_from_id(api_dict, tweet_id, wait_interval):
-    for current_username in api_dict.keys():
-        time.sleep(wait_interval)
-        api_dict[current_username].create_favorite(tweet_id)
 
-def retweet_from_id(api_dict, tweet_id, wait_interval):
-    for current_username in api_dict.keys():
-        time.sleep(wait_interval)
-        print(current_username)
-        try:
-            api_dict[current_username].retweet(tweet_id)
-        except:
-            print("ACCOUNT LOCKED")
+
 # follow_each_other(user_keys_dataframe, api_dict)
-tweet_retweet(api_dict,"AAP IS GREAT",1)
+# tweet_retweet("AAP REPORT:https://www.hindustantimes.com/delhi-news/aap-completes-3-years-in-delhi-a-look-at-kejriwal-govt-s-achievements-failures/story-bDy16KdOYHbg17lkyGwOqK.html")
 # print(tweet_id_dict)
 # update_status_from_excel()
 # create_tweet_file(user_keys_dataframe)
@@ -221,4 +211,3 @@ tweet_retweet(api_dict,"AAP IS GREAT",1)
 # destroy_top_status()
 # like_top_status()
 # retweet_top_status()
-# retweet_from_id(api_dict, 1021302316576780289, 2)
