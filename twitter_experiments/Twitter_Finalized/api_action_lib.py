@@ -200,7 +200,19 @@ def retweet_top_status():
         for tweet in tweepy.Cursor(api_dict[current_username].user_timeline).items(1):
             print(tweet.text)
             api_dict[current_username].retweet(tweet.id)
+def like_from_id(api_dict, tweet_id, wait_interval):
+    for current_username in api_dict.keys():
+        time.sleep(wait_interval)
+        api_dict[current_username].create_favorite(tweet_id)
 
+def retweet_from_id(api_dict, tweet_id, wait_interval):
+    for current_username in api_dict.keys():
+        time.sleep(wait_interval)
+        print(current_username)
+        try:
+            api_dict[current_username].retweet(tweet_id)
+        except Exception as e:
+            print(f"{e}: is the error.")
 
 # follow_each_other(user_keys_dataframe, api_dict)
 # tweet_retweet("AAP REPORT:https://www.hindustantimes.com/delhi-news/aap-completes-3-years-in-delhi-a-look-at-kejriwal-govt-s-achievements-failures/story-bDy16KdOYHbg17lkyGwOqK.html")
