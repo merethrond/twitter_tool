@@ -9,12 +9,14 @@
         <input type="number" name="tweet_id" placeholder="Enter tweet ID">
         <input type="checkbox" name="retweet_check" >Retweet
         <input type="checkbox" name="like_check" >Like
+        <input type="number" name="wait_interval" placeholder="Enter wait time(in seconds) between tweets">
         <button>Submit</button>
     </form>
 
     <h3>Multiple tweets</h3>
     <form action = "{{ url_for('tweet_bomb') }}", method="post">
       <textarea name="tweet_text" placeholder="Enter the tweet to be tweeted multiple times"></textarea>
+      <input type="number" name="wait_interval" placeholder="Enter wait time(in seconds) between tweets">
       <button>Tweet</button>
     </form>
 {% endblock %}
