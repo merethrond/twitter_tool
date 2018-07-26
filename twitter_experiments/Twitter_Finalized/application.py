@@ -16,14 +16,13 @@ def hello():
     print("like checkbox is:", request.form.get("like_check"))
     print("Twitter ID is:", twitter_id)
     wait_interval = int(request.form.get("wait_interval"))
+    print(str(username_list))
+    # if request.form.get("like_check") == 'on':
+    #     like_from_id(api_dict, twitter_id, wait_interval)
+    # if request.form.get("retweet_check") == 'on':
+    #     retweet_from_id(api_dict, twitter_id, wait_interval)
 
-    print(username_list)
-    if request.form.get("like_check") == 'on':
-        like_from_id(api_dict, twitter_id, wait_interval)
-    if request.form.get("retweet_check") == 'on':
-        retweet_from_id(api_dict, twitter_id, wait_interval)
-
-    return render_template("hello.html", name=twitter_id)
+    return render_template("hello.html", usernames=username_list)
 
 @app.route("/tweet", methods = ["POST"])
 def tweet_bomb():

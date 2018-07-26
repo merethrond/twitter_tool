@@ -1,9 +1,15 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Website!</title>
+    </head>
+    <body>
+        <h1>Usernames currently in operation.</h1>
 
-{% block heading %}
-    Hello!
-{% endblock %}
-
-{% block body %}
-    Hello, {{ name }}!
-{% endblock %}
+        <ul>
+            {% for name in usernames %}
+                <li>{{ name }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

@@ -173,7 +173,7 @@ def tweet_like(tweet_text = 'I am a sample tweet', wait_interval = 0):
 
 # create_tweet_file()
 # update_status_from_excel()
-def update_same_status(tweet_text, wait_interval = 0):
+def update_same_status(api_dict, tweet_text, wait_interval = 0):
     for current_username in api_dict.keys():
         tweet = api_dict[current_username].update_status(tweet_text)
         print(f"{current_username}'s status is updated")
