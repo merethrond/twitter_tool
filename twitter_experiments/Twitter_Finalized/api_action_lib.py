@@ -173,53 +173,53 @@ def tweet_like(tweet_text = 'I am a sample tweet', wait_interval = 0):
 
 # create_tweet_file()
 # update_status_from_excel()
-def update_same_status(api_dict, tweet_text, wait_interval = 0):
+def update_same_status(tweet_text, wait_interval = 0):
     for current_username in api_dict.keys():
         tweet = api_dict[current_username].update_status(tweet_text)
         print(f"{current_username}'s status is updated")
         if wait_interval != 0 and current_username != list(api_dict.keys())[-1]:
             print(f"Waiting for {wait_interval} seconds")
             time.sleep(wait_interval)
-def destroy_top_status():
+def destroy_top_status(n = 1):
     for current_username in api_dict.keys():
         print(current_username)
         for tweet in tweepy.Cursor(api_dict[current_username].user_timeline).items(1):
             print(tweet.text)
             api_dict[current_username].destroy_status(tweet.id)
-            print("status destroyed!")
 
-def like_top_status():
+def like_top_status(screen_name = "", n = 1):
     for current_username in api_dict.keys():
         print(current_username)
-        for tweet in tweepy.Cursor(api_dict[current_username].user_timeline).items(1):
-            print(tweet.text)
-            api_dict[current_username].create_favorite(tweet.id)
-def retweet_top_status():
+        if screen_name != "":
+            for tweet in tweepy.Cursor(api_dict[current_username].user_timeline, screen_name).items(n):
+                try:
+                    api_dict[current_username].create_favorite(tweet.id)
+                    print(f"{tweet.text} tweeted by {screen_name} is liked by {current_username}")
+                except Exception as e:
+                    print(f"ERROR: {e}")
+        else:
+            print("There is no screen name provided")
+            break
+def retweet_top_status(screen_name = "", n = 1):
     for current_username in api_dict.keys():
         print(current_username)
-        for tweet in tweepy.Cursor(api_dict[current_username].user_timeline).items(1):
-            print(tweet.text)
-            api_dict[current_username].retweet(tweet.id)
-def like_from_id(api_dict, tweet_id, wait_interval):
-    for current_username in api_dict.keys():
-        time.sleep(wait_interval)
-        api_dict[current_username].create_favorite(tweet_id)
-
-def retweet_from_id(api_dict, tweet_id, wait_interval):
-    for current_username in api_dict.keys():
-        time.sleep(wait_interval)
-        print(current_username)
-        try:
-            api_dict[current_username].retweet(tweet_id)
-        except Exception as e:
-            print(f"{e}: is the error.")
+        if screen_name != "":
+            for tweet in tweepy.Cursor(api_dict[current_username].user_timeline, screen_name).items(n):
+                try:
+                    api_dict[current_username].retweet(tweet.id)
+                    print(f"{tweet.text} tweeted by {screen_name} is retweeted by {current_username}")
+                except Exception as e:
+                    print(f"ERROR: {e}")
+        else:
+            print("There is no screen name provided")
+            break
 
 # follow_each_other(user_keys_dataframe, api_dict)
-# tweet_retweet("AAP REPORT:https://www.hindustantimes.com/delhi-news/aap-completes-3-years-in-delhi-a-look-at-kejriwal-govt-s-achievements-failures/story-bDy16KdOYHbg17lkyGwOqK.html")
+# tweet_retweet("What exactly is #DigitalBikaner ? Can someone please explain to me?",1)
 # print(tweet_id_dict)
 # update_status_from_excel()
 # create_tweet_file(user_keys_dataframe)
 # update_same_status("'Live for an ideal and that one ideal alone. Let it be so great, so strong, that there may be nothing else left in the mind; no place for anything else, no time for anything else.' -Swami Vivekananda", 2)
-# destroy_top_status()
-# like_top_status()
+# destroy_top_status(1)
+# like_top_status("Arjun94Joshi",1)
 # retweet_top_status()
