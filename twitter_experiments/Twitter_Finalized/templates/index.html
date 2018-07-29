@@ -5,18 +5,30 @@
 {% endblock %}
 
 {% block body %}
+    <h3>Do operations using tweet ID</h3>
     <form action="{{ url_for('retweet_like_from_twitter_id') }}" method="post">
         <input type="number" name="tweet_id" placeholder="Enter tweet ID">
-        <input type="checkbox" name="retweet_check" >Retweet
-        <input type="checkbox" name="like_check" >Like
-        <input type="number" name="wait_interval" placeholder="Enter wait time(in seconds) between tweets">
+        <input type="checkbox" name="id_retweet_check" >Retweet
+        <input type="checkbox" name="id_like_check" >Like
+        <input type="number" name="id_wait_interval" placeholder="Enter wait time(in seconds) between tweets">
         <button>Submit</button>
     </form>
 
-    <h3>Multiple tweets</h3>
+    <h3>Update same Status</h3>
     <form action = "{{ url_for('tweet_bomb') }}", method="post">
       <textarea name="tweet_text" placeholder="Enter the tweet to be tweeted multiple times"></textarea>
-      <input type="number" name="wait_interval" placeholder="Enter wait time(in seconds) between tweets">
+      <input type="number" name="wait_interval" placeholder="Enter wait time(in seconds) between each tweets">
       <button>Tweet</button>
+    </form>
+
+    <h3>Pick n number of tweets from user timeline(using screen name) and do operations on them.</h3>
+    <form action="{{ url_for('retweet_like_using_screen_name') }}" method="post">
+        <input type="text" name="screen_name" placeholder="Enter Screen Name">
+        <input type="number" name="status_count" placeholder="Number of tweets to pick">
+
+        <input type="checkbox" name="timeline_retweet_check" >Retweet
+        <input type="checkbox" name="timeline_like_check" >Like
+        <input type="number" name="timeline_wait_interval" placeholder="Enter wait time(in seconds) between each operation">
+        <button>Submit</button>
     </form>
 {% endblock %}
