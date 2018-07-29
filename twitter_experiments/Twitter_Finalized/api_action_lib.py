@@ -173,6 +173,20 @@ def tweet_like(tweet_text = 'I am a sample tweet', wait_interval = 0):
 
 # create_tweet_file()
 # update_status_from_excel()
+def like_from_id(api_dict, tweet_id, wait_interval):
+    for current_username in api_dict.keys():
+        time.sleep(wait_interval)
+        api_dict[current_username].create_favorite(tweet_id)
+
+def retweet_from_id(api_dict, tweet_id, wait_interval):
+    for current_username in api_dict.keys():
+        time.sleep(wait_interval)
+        print(current_username)
+        try:
+            api_dict[current_username].retweet(tweet_id)
+        except Exception as e:
+            print(f"{e}: is the error.")
+
 def update_same_status(tweet_text, wait_interval = 0):
     for current_username in api_dict.keys():
         tweet = api_dict[current_username].update_status(tweet_text)
