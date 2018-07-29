@@ -9,20 +9,19 @@ username_list = list(user_keys_dataframe.username)
 def index():
     return render_template("index.html")
 
-@app.route("/hello", methods=["POST"])
-def hello():
+@app.route("/retweet_or_like_from_id", methods=["POST"])
+def retweet_like_from_twitter_id():
     twitter_id = int(request.form.get("tweet_id"))
     print("retweet checkbox is:", request.form.get("retweet_check"))
     print("like checkbox is:", request.form.get("like_check"))
     print("Twitter ID is:", twitter_id)
     wait_interval = int(request.form.get("wait_interval"))
-    print(str(username_list))
-    # if request.form.get("like_check") == 'on':
-    #     like_from_id(api_dict, twitter_id, wait_interval)
-    # if request.form.get("retweet_check") == 'on':
-    #     retweet_from_id(api_dict, twitter_id, wait_interval)
-
-    return render_template("hello.html", usernames=username_list)
+    # print(str(username_list))
+    if request.form.get("like_check") == 'on':
+        like_from_id(api_dict, twitter_id, wait_interval)
+    if request.form.get("retweet_check") == 'on':
+        retweet_from_id(api_dict, twitter_id, wait_interval)
+    return "Operation completed"
 
 @app.route("/tweet", methods = ["POST"])
 def tweet_bomb():
