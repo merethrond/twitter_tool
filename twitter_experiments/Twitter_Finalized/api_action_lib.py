@@ -235,5 +235,5 @@ def retweet_top_status(screen_name = "", n = 1):
 # create_tweet_file(user_keys_dataframe)
 # update_same_status("'Live for an ideal and that one ideal alone. Let it be so great, so strong, that there may be nothing else left in the mind; no place for anything else, no time for anything else.' -Swami Vivekananda", 2)
 # destroy_top_status(1)
-# like_top_status("Arjun94Joshi",1)
+# like_top_status()
 # retweet_top_status()
