@@ -40,7 +40,7 @@ def retweet_like_using_screen_name():
     wait_interval = int(request.form.get("timeline_wait_interval"))
     # print(str(username_list))
     if request.form.get("timeline_like_check") == 'on':
-        like_top_status(twitter_screen_name, status_count, wait_interval)
+        like_top_status(api_dict, twitter_screen_name, status_count, wait_interval)
     if request.form.get("timeline_retweet_check") == 'on':
-        retweet_top_status(twitter_screen_name, status_count, wait_interval)
+        retweet_top_status(api_dict, twitter_screen_name, status_count, wait_interval)
     return "Operation completed"

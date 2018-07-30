@@ -201,7 +201,7 @@ def destroy_top_status(n = 1):
             print(tweet.text)
             api_dict[current_username].destroy_status(tweet.id)
 
-def like_top_status(screen_name = "", n = 1, wait_interval = 0):
+def like_top_status(api_dict, screen_name = "", n = 1, wait_interval = 0):
     for current_username in api_dict.keys():
         print(current_username)
         if screen_name != "":
@@ -217,7 +217,7 @@ def like_top_status(screen_name = "", n = 1, wait_interval = 0):
         else:
             print("There is no screen name provided")
             break
-def retweet_top_status(screen_name = "", n = 1, wait_interval = 0):
+def retweet_top_status(api_dict, screen_name = "", n = 1, wait_interval = 0):
     for current_username in api_dict.keys():
         print(current_username)
         if screen_name != "":
