@@ -1,13 +1,3 @@
 code/.DS_Store
-code/excel_files/
-code/email_credentials.xlsx
-code/vault.py
-code/.ipynb_checkpoints/
-code/__pycache__/
-code/filename.xlsx
-code/debug.log
-code/twitter_api_multi_accs.ipynb
-code/twitter_trials.ipynb
-code/access_token.py
 code/test_api.ipynb
 code/Untitled.ipynb
