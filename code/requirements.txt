@@ -17,7 +17,7 @@ numpy==1.15.0
 oauthlib==2.1.0
 pandas==0.23.3
 pycparser==2.18
-PyJWT==1.6.4
+PyJWT==2.4.0
 pyOpenSSL==18.0.0
 PySocks==1.6.8
 python-dateutil==2.7.3
